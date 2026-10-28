@@ -233,6 +233,7 @@ function saveDok_(me, b) {
 function saveImpl_(me, b) {
   var o = b.data || {};
   if (!o.kerjasama_id || !o.kegiatan || !o.tanggal) throw new Error('Kerjasama, kegiatan, tanggal wajib.');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(o.tanggal)) throw new Error('Tanggal format yyyy-mm-dd.');
   var k = rows_('Kerjasama').filter(function (x) { return x.id === o.kerjasama_id; })[0];
   if (!k) throw new Error('Kerjasama tak ditemukan.');
   if (me.role === 'ketua') throw new Error('Ketua hanya pantau.');
