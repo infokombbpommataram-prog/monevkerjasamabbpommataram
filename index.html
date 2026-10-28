@@ -243,11 +243,24 @@ function csv(f) {
 }
 document.getElementById('bImp').onclick = function () {
   document.getElementById('impMsg').textContent = 'Mengirim...';
-  Promise.all([csv(document.getElementById('cIns').files[0]), csv(document.getElementById('cKs').files[0]), csv(document.getElementById('cRl').files[0]), csv(document.getElementById('cIm').files[0])]).then(function (a) {
-    api('bulk_import', { instansi: a[0], kerjasama: a[1], ruanglingkup: a[2], implementasi: a[3] }).then(function (r) {
-      document.getElementById('impMsg').textContent = r.ok ? 'Impor masuk: ' + JSON.stringify(r.imported) : r.error;
-    }).catch(function (e) { document.getElementById('impMsg').textContent = 'Gagal: ' + e; });
+  var files = [document.getElementById('cIns').files[0], document.getElementById('cKs').files[0], document.getElementById('cRl').files[0], document.getElementById('cIm').files[0]];
+  var keys = ['instansi', 'kerjasama', 'ruanglingkup', 'implementasi'];
+  var chain = Promise.resolve(), hasil = [];
+  files.forEach(function (f, i) {
+    chain = chain.then(function () {
+      return csv(f).then(function (rows) {
+        if (!rows.length) return;
+        document.getElementById('impMsg').textContent = 'Kirim ' + keys[i] + ' (' + rows.length + ')...';
+        var body = { action: 'bulk_import', token: S.token };
+        body[keys[i]] = rows;
+        return fetch(API_URL, { method: 'POST', body: JSON.stringify(body) }).then(function (r) { return r.json(); }).then(function (r2) {
+          hasil.push(keys[i] + ':' + (r2.ok ? JSON.stringify(r2.imported) : r2.error));
+          document.getElementById('impMsg').textContent = hasil.join(' | ');
+        });
+      });
+    });
   });
+  chain.catch(function (e) { document.getElementById('impMsg').textContent = hasil.join(' | ') + ' Gagal: ' + e; });
 };
 document.getElementById('fKs').onsubmit = function (e) {
   e.preventDefault(); var f = e.target, o = {};
