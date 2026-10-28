@@ -25,7 +25,11 @@ function setup_() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   SHEETS.forEach(function (n) {
     var sh = ss.getSheetByName(n) || ss.insertSheet(n);
-    if (sh.getLastRow() === 0) sh.appendRow(HEADERS[n]);
+    if (sh.getLastRow() === 0) { sh.appendRow(HEADERS[n]); return; }
+    var cur = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    HEADERS[n].forEach(function (h, i) {
+      if (cur.indexOf(h) < 0) sh.getRange(1, cur.length + 1).setValue(h);
+    });
   });
   seed_(ss);
   return 'ok';
