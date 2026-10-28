@@ -295,10 +295,12 @@ function rootFolder_() {
 }
 function upload_(me, b) {
   if (me.role === 'ketua') throw new Error('Ketua hanya pantau.');
-  if (!MIME_OK[b.mime]) throw new Error('Hanya PDF/JPG/PNG.');
-  var bytes = Utilities.base64Decode(b.base64.split(',').pop());
+  var ext = String(b.nama || '').split('.').pop().toLowerCase();
+  var mime = (/^(pdf|jpg|jpeg|png)$/.test(ext) && b.mime) || (ext === 'pdf' ? 'application/pdf' : ext === 'png' ? 'image/png' : ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : '');
+  if (!MIME_OK[mime]) throw new Error('Hanya PDF/JPG/PNG.');
+  var bytes = Utilities.base64Decode(String(b.base64).split(',').pop());
   if (bytes.length > MAX_MB * 1024 * 1024) throw new Error('Maks 10MB.');
-  var blob = Utilities.newBlob(bytes, b.mime, b.nama);
+  var blob = Utilities.newBlob(bytes, mime, b.nama);
   var f = rootFolder_().createFile(blob);
   f.setDescription('monev-kerjasama|' + me.username);
   return out_({ ok: true, drive_id: f.getId(), nama: b.nama });

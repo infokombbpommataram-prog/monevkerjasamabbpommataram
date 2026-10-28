@@ -1,18 +1,55 @@
-# DESIGN.md — Monev Kerja Sama BBPOM Mataram
+# DESIGN.md — Monev Kerja Sama BBPOM Mataram (GovTech Enterprise)
 
-Identitas: portal dinas resmi. Rasa Apple: tajam, lega, tipografi jadi pahlawan.
-Glass dipakai hemat: nav + login + judul angka, bukan seluruh halaman.
+Identitas: Portal Dinas Resmi Berstandar GovTech / Enterprise Modern.
+Karakter: Bersih, Rapi, Terstruktur, Kontras Tinggi, dan Berfokus Penuh pada Produktivitas Data Operasional.
 
-Dial: ENERGY 3 / RHYTHM 3 / MOTION 2.
+---
 
-Latar: gradasi navy #0f2a43 ke green #1f7a44 + sorotan radial, alasan: otoritas ke sehat.
-Glass: header, nav, login, kartu metrik. Tabel + form putih solid jaga baca.
-Kartu varian garis atas: g1 green, g2 biru muda, g3 kuning, g4 merah muda.
-Grafik: area mengalir + garis, bukan batang kaku. Gerak: hover angkat saja.
-Palet inti tetap 2 (navy, green) + aksen status. Tanpa ungu, tanpa glow.
+## 1. Filosofi & Dial
 
-Palet: bg terang #eef2f1, ink navy #0f2a43, aksen dark green #14532d,
-aksen kedua navy #1e3a5f, garis #d8e2dd. Tanpa gradasi ungu/biru, tanpa glow.
-Tipografi: -apple-system stack. H1 40/1.05 tight, H2 22, angka kartu 34/800 navy.
-Satu motif: garis atas 3px green pada kartu metrik + sudut 18px konsisten.
-Gerak: hover angkat 1px + bayang lembut saja, tanpa fade-up massal.
+- **ENERGY**: 2 (Tenang, bersih, latar slate terang `#f8fafc` dengan kartu putih murni `#ffffff`).
+- **RHYTHM**: 4 (Grid teratur, hierarki sidebar vertikal 260px, topbar 64px, jarak padding konsisten 16px/24px/28px).
+- **MOTION**: 1 (Transisi fungsional halus 0.18s ease pada hover tombol, drawer/modal transform Y 16px, tanpa gerak mengambang yang berlebihan).
+
+---
+
+## 2. Palet Warna & Semantic Tokens
+
+- **Latar Aplikasi (`--bg-app`)**: `#f8fafc` (Slate-50 cerah, ramah mata untuk kerja berjam-jam).
+- **Latar Kartu (`--bg-card`)**: `#ffffff` (Putih solid dengan border `#e2e8f0` dan bayangan lembut).
+- **Sidebar (`--bg-sidebar`)**: `#0f172a` (Slate-900 / Navy gelap otoritas kedinasan).
+- **Warna Tinta / Tipografi**:
+  - Tinta Utama: `#0f172a` (Slate-900 / kontras tinggi).
+  - Tinta Sekunder: `#475569` (Slate-600).
+  - Tinta Muted / Label: `#64748b` (Slate-500).
+- **Aksen Kedinasan & Status**:
+  - Hijau BPOM Sehat (`--brand-emerald`): `#059669` (hover `#047857`, bg `#ecfdf5`).
+  - Navy Otoritas (`--brand-navy`): `#0f2a43` / `#1e3a5f`.
+  - H-90 Peringatan / Kritis (`--warn-amber`): `#d97706` (bg `#fffbeb`, border `#fde68a`).
+  - Kedaluwarsa (`--danger-rose`): `#dc2626` (bg `#fef2f2`, border `#fecaca`).
+  - Tanpa Batas / Mitra (`--info-blue`): `#0284c7` (bg `#f0f9ff`, border `#bae6fd`).
+
+---
+
+## 3. Komponen Antarmuka Utama
+
+1. **Sidebar Kiri Responsif (260px)**:
+   - Header: Lambang POM dengan gradasi emerald + nama instansi.
+   - Menu dikelompokkan menjadi **Menu Utama** dan **Administrasi** (hanya terlihat oleh role `admin`).
+   - Indikator menu aktif dengan pill emerald dan ikon SVG inline.
+   - Footer: Kartu akun pengguna dengan inisial avatar, nama lengkap, role badge, dan tombol logout.
+   - Responsif: Berubah menjadi drawer geser dengan tombol hamburger di layar tablet/mobile (< 960px).
+2. **Topbar Bersih (64px)**:
+   - Breadcrumb penunjuk halaman aktif (*Portal Monev &rsaquo; Halaman*).
+   - Indikator koneksi server real-time (*Google Apps Script Live*).
+3. **Kartu Metrik KPI (Enterprise Boxes)**:
+   - Kotak putih dengan sudut 14px, angka tebal 28px, dan ikon SVG dengan latar belakang warna pastel.
+4. **Formulir Input (Modal Card Dialog)**:
+   - Form input MoU/PKS, Implementasi, Instansi, Dokumen, dan Pengguna ditempatkan dalam **Modal Dialog Card** yang rapi.
+   - Layar tabel tetap 100% fokus menampilkan baris data.
+5. **Tabel Data Enterprise**:
+   - Header slate-50 dengan label semi-bold uppercase 11.5px.
+   - Bilah pencarian instan dan tombol filter status pill di bagian atas tabel.
+   - Tombol **WA PIC** langsung membuka obrolan WhatsApp dengan nomor kontak PIC dan pesan otomatis.
+6. **Toast Notification**:
+   - Notifikasi mengambang gelap elegan di pojok kanan bawah, menggantikan `alert()` browser.

@@ -3,332 +3,2639 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Monev Kerja Sama BBPOM Mataram</title>
+<title>Monev Kerja Sama — BBPOM di Mataram</title>
 <style>
-/* Reading: portal dinas flowing-liquid, dial ENERGY 3 / RHYTHM 3 / MOTION 2.
-   Alasan: navy-to-green = otoritas ke status sehat; glass di lapisan atas saja (R-10); tabel putih jaga baca. */
-:root{--bg:#0f2a43;--ink:#0f2a43;--mut:#54677c;--line:rgba(15,42,67,.12);--green:#14532d;--green2:#1f7a44;--navy:#1e3a5f;--warn:#8a5f17;--bad:#a83226;--info:#1e3a5f}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:linear-gradient(135deg,#0f2a43 0%,#1e3a5f 34%,#14532d 78%,#1f7a44 100%) fixed;min-height:100vh}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(600px 320px at 12% -4%,rgba(255,255,255,.22),transparent 60%),radial-gradient(700px 380px at 88% 8%,rgba(255,255,255,.14),transparent 60%),radial-gradient(500px 500px at 50% 110%,rgba(31,122,68,.35),transparent 65%)}
-header{background:rgba(15,42,67,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.16)}
-header b{font-size:15px;letter-spacing:.2px}nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 20px;position:sticky;top:0;z-index:5;background:rgba(15,42,67,.45);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.14)}
-nav button,.btn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.14);color:#fff;padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14px}
-nav button.on,.btn.pri{background:linear-gradient(135deg,#1f7a44,#14532d);color:#fff;border-color:transparent}
-main{padding:8px 20px 48px;max-width:1120px;margin:0 auto;position:relative}
-h1{font-size:44px;line-height:1.02;letter-spacing:-.03em;margin:26px 0 6px}h2{font-size:22px;letter-spacing:-.01em;margin:18px 0 8px}
-main>.mut,main>p.mut{color:rgba(255,255,255,.75)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin:16px 0}
-.card{background:linear-gradient(150deg,rgba(255,255,255,.24),rgba(255,255,255,.08));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:16px;color:#fff;box-shadow:0 10px 34px rgba(0,0,0,.22)}
-.card .n{font-size:36px;font-weight:800;letter-spacing:-.02em}.card .l{font-size:12px;color:rgba(255,255,255,.8)}
-.card.g1{border-top:3px solid #7fe0a8}.card.g2{border-top:3px solid #9fc2ff}.card.g3{border-top:3px solid #ffd98a}.card.g4{border-top:3px solid #ff9d8a}
-table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.96);color:var(--ink);border-radius:18px;overflow:hidden;font-size:13px}
-th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
-th{background:#e9eff4;color:var(--navy);font-size:12px;letter-spacing:.04em}tr:hover td{background:#f5faf7}
-.card.plain{background:rgba(255,255,255,.94);color:var(--ink);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.5)}
-input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:14px;background:#fff;color:var(--ink)}
-form.box{background:rgba(255,255,255,.94);color:var(--ink);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:14px;margin:12px 0;display:grid;gap:10px}
-form.box .mut{color:var(--mut)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-@media(max-width:700px){.row2,.row3{grid-template-columns:1fr}table{font-size:12px}h1{font-size:32px}}
-.badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:11px;border:1px solid var(--line)}
-.b-aktif{background:#e2f1e6;color:var(--green)}.b-hampir_berakhir{background:#faf0d7;color:var(--warn)}.b-kedaluwarsa{background:#f9e2de;color:var(--bad)}.b-tanpa_batas{background:#e3ebf5;color:var(--navy)}
-.mut{color:var(--mut);font-size:12px}.err{color:#ffb4a8}.hide{display:none!important}
-:focus-visible{outline:3px solid #9fc2ff;outline-offset:2px}
-footer{padding:22px 16px;color:rgba(255,255,255,.65);font-size:12px;text-align:center}
-.btn{transition:transform .18s ease,box-shadow .18s ease}.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
-#login{max-width:400px;margin:9vh auto;background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,.1));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.35);border-radius:24px;padding:26px;box-shadow:0 18px 60px rgba(0,0,0,.3);color:#fff}
-#login .mut{color:rgba(255,255,255,.78)}#login h1{font-size:30px;margin:0 0 4px}
-#login input{background:rgba(255,255,255,.92)}
-#app .card .mut{color:rgba(255,255,255,.8)}
+/* ==========================================================================
+   MONEV KERJA SAMA BBPOM MATARAM — GOVTECH ENTERPRISE (OPTION 1)
+   Filosofi: Profesional, bersih, standar portal pemerintahan modern (GovTech).
+   Layout: Sidebar responsif + Topbar + Konten Berlatar Slate/Putih Bersih.
+   ========================================================================== */
+
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bg-app: #f8fafc;
+  --bg-sidebar: #0f172a;
+  --bg-sidebar-hover: #1e293b;
+  --bg-card: #ffffff;
+  --border-light: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  
+  --ink-primary: #0f172a;
+  --ink-secondary: #475569;
+  --ink-muted: #64748b;
+  --ink-light: #94a3b8;
+  
+  --brand-navy: #0f2a43;
+  --brand-navy-light: #1e3a5f;
+  --brand-emerald: #059669;
+  --brand-emerald-hover: #047857;
+  --brand-emerald-bg: #ecfdf5;
+  --brand-emerald-text: #065f46;
+  
+  --warn-amber: #d97706;
+  --warn-amber-bg: #fffbeb;
+  --warn-amber-text: #92400e;
+  
+  --danger-rose: #dc2626;
+  --danger-rose-bg: #fef2f2;
+  --danger-rose-text: #991b1b;
+  
+  --info-blue: #0284c7;
+  --info-blue-bg: #f0f9ff;
+  --info-blue-text: #075985;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-pill: 9999px;
+  --transition: all 0.18s ease-in-out;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink-primary);
+  background-color: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   LAYOUT STRUCTURE: SIDEBAR + MAIN VIEWPORT
+   ========================================================================== */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar */
+aside.sidebar {
+  width: 260px;
+  background-color: var(--bg-sidebar);
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 50;
+  transition: transform 0.25s ease-in-out;
+}
+
+.sidebar-header {
+  padding: 20px 18px;
+  border-bottom: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sidebar-logo {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--brand-emerald), #10b981);
+  color: #fff;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
+}
+.sidebar-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.sidebar-subtitle {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 12px;
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+.sidebar-group-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 10px 6px;
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  transition: var(--transition);
+}
+.nav-item svg {
+  width: 18px;
+  height: 18px;
+  color: #94a3b8;
+  transition: var(--transition);
+}
+.nav-item:hover {
+  background-color: var(--bg-sidebar-hover);
+  color: #ffffff;
+}
+.nav-item:hover svg {
+  color: #ffffff;
+}
+.nav-item.active {
+  background-color: var(--brand-emerald);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35);
+}
+.nav-item.active svg {
+  color: #ffffff;
+}
+.nav-item .nav-badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.sidebar-footer {
+  padding: 14px 12px;
+  border-top: 1px solid #1e293b;
+  background-color: #0b1324;
+}
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  background-color: #1e293b;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #0f2a43);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.user-details {
+  overflow: hidden;
+}
+.user-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-role-badge {
+  font-size: 10px;
+  color: #34d399;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.btn-icon-logout {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-icon-logout:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+/* Main Viewport */
+.main-viewport {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: var(--bg-app);
+}
+
+/* Topbar */
+header.topbar {
+  height: 64px;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.mobile-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.page-breadcrumb {
+  font-size: 13px;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.page-breadcrumb strong {
+  color: var(--ink-primary);
+  font-weight: 600;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.status-pill-server {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-emerald-bg);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--brand-emerald-text);
+}
+.server-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--brand-emerald);
+}
+
+/* Page Content Container */
+main.page-content {
+  flex: 1;
+  padding: 28px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Typography */
+.content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.content-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  letter-spacing: -0.02em;
+}
+.content-header p {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+/* Metric KPI Cards (Enterprise Style) */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.metric-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.metric-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.metric-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.metric-box-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.metric-box-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.metric-box-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink-primary);
+  line-height: 1.1;
+  margin: 8px 0 4px;
+}
+.metric-box-meta {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+.metric-box-meta strong {
+  color: var(--ink-primary);
+}
+
+/* KPI Color variations */
+.metric-total .metric-box-icon { background: #e0f2fe; color: #0369a1; }
+.metric-aktif .metric-box-icon { background: #dcfce7; color: #15803d; }
+.metric-warn .metric-box-icon  { background: #fef3c7; color: #b45309; }
+.metric-danger .metric-box-icon{ background: #fee2e2; color: #b91c1c; }
+.metric-info .metric-box-icon  { background: #ede9fe; color: #6d28d9; }
+
+/* Alert Banner H-90 */
+.urgent-banner {
+  background-color: var(--warn-amber-bg);
+  border: 1px solid #fde68a;
+  border-left: 4px solid var(--warn-amber);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.urgent-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.urgent-badge {
+  background-color: var(--warn-amber);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+}
+.urgent-banner-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--warn-amber-text);
+}
+.urgent-banner-desc {
+  font-size: 12px;
+  color: #78350f;
+}
+
+/* Cards & Charts Section */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+.card-body {
+  padding: 20px;
+}
+
+/* Toolbar & Filters (Enterprise style) */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.search-input-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+}
+.search-input-wrap svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--ink-light);
+  pointer-events: none;
+}
+.search-input-wrap input {
+  width: 100%;
+  padding: 9px 12px 9px 36px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background-color: #fff;
+  font-size: 13px;
+  color: var(--ink-primary);
+  outline: none;
+  transition: var(--transition);
+}
+.search-input-wrap input:focus {
+  border-color: var(--brand-emerald);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  background-color: #fff;
+  border: 1px solid var(--border-light);
+  color: var(--ink-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.filter-btn:hover {
+  background-color: #f1f5f9;
+  color: var(--ink-primary);
+}
+.filter-btn.active {
+  background-color: var(--brand-navy);
+  color: #fff;
+  border-color: var(--brand-navy);
+}
+
+/* Enterprise Data Tables */
+.table-wrapper {
+  background-color: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+table.gov-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+table.gov-table thead {
+  background-color: #f8fafc;
+  border-bottom: 1px solid var(--border-light);
+}
+table.gov-table th {
+  padding: 12px 16px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+table.gov-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+  color: var(--ink-primary);
+}
+table.gov-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+table.gov-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+}
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.b-aktif { background: var(--brand-emerald-bg); color: var(--brand-emerald-text); border: 1px solid #a7f3d0; }
+.b-aktif .badge-dot { background: var(--brand-emerald); }
+.b-hampir_berakhir { background: var(--warn-amber-bg); color: var(--warn-amber-text); border: 1px solid #fde68a; }
+.b-hampir_berakhir .badge-dot { background: var(--warn-amber); }
+.b-kedaluwarsa { background: var(--danger-rose-bg); color: var(--danger-rose-text); border: 1px solid #fecaca; }
+.b-kedaluwarsa .badge-dot { background: var(--danger-rose); }
+.b-tanpa_batas { background: var(--info-blue-bg); color: var(--info-blue-text); border: 1px solid #bae6fd; }
+.b-tanpa_batas .badge-dot { background: var(--info-blue); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn.pri {
+  background-color: var(--brand-emerald);
+  color: #fff;
+}
+.btn.pri:hover {
+  background-color: var(--brand-emerald-hover);
+}
+.btn.navy {
+  background-color: var(--brand-navy);
+  color: #fff;
+}
+.btn.navy:hover {
+  background-color: var(--brand-navy-light);
+}
+.btn.sec {
+  background-color: #fff;
+  border: 1px solid var(--border-light);
+  color: var(--ink-secondary);
+}
+.btn.sec:hover {
+  background-color: #f1f5f9;
+  color: var(--ink-primary);
+}
+.btn.sm {
+  padding: 5px 10px;
+  font-size: 11.5px;
+}
+.btn-wa {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+.btn-wa:hover {
+  background-color: #15803d;
+  color: #fff;
+}
+
+/* Modal Dialogs / Slide-over */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-card {
+  background-color: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--border-light);
+  transform: translateY(16px);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-overlay.open .modal-card {
+  transform: translateY(0);
+}
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--ink-light);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-close:hover {
+  background-color: #f1f5f9;
+  color: var(--ink-primary);
+}
+.modal-body {
+  padding: 24px;
+}
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background-color: #f8fafc;
+  border-bottom-left-radius: var(--radius-xl);
+  border-bottom-right-radius: var(--radius-xl);
+}
+
+/* Form Styles */
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+label.field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  margin-bottom: 6px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background-color: #fff;
+  font-size: 13px;
+  color: var(--ink-primary);
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--brand-emerald);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+}
+input[type="checkbox"] {
+  width: auto;
+  accent-color: var(--brand-emerald);
+}
+
+/* Toast Notifications */
+#toast-box {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  background-color: #0f172a;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-left: 4px solid var(--brand-emerald);
+}
+.toast.error { border-left-color: var(--danger-rose); }
+.toast.info { border-left-color: var(--info-blue); }
+
+/* Login Screen */
+#login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #0f2a43 0%, #0f172a 100%);
+}
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: #ffffff;
+  border-radius: var(--radius-xl);
+  padding: 36px 32px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+}
+.login-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.login-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--brand-emerald), #10b981);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);
+}
+.login-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink-primary);
+}
+.login-subtitle {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+.login-err {
+  background-color: var(--danger-rose-bg);
+  color: var(--danger-rose-text);
+  border: 1px solid #fecaca;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* Responsive adjustments */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  z-index: 45;
+}
+@media (max-width: 960px) {
+  aside.sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+  }
+  aside.sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  .sidebar-backdrop.show {
+    display: block;
+  }
+  .mobile-toggle {
+    display: flex;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-row-2, .form-row-3 {
+    grid-template-columns: 1fr;
+  }
+  main.page-content {
+    padding: 20px 16px;
+  }
+  header.topbar {
+    padding: 0 16px;
+  }
+}
+
+.hide { display: none !important; }
+.mut { color: var(--ink-muted); font-size: 12px; }
+.bold { font-weight: 700; color: var(--ink-primary); }
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
 </style>
 </head>
 <body>
-<header><b>Monev Kerja Sama BBPOM Mataram</b><span id="who" class="mut" style="color:#fff"></span></header>
 
+<!-- Login Screen -->
 <div id="login">
-<h1>Masuk aplikasi</h1>
-<p class="mut">Monitoring dan evaluasi MoU/PKS, masa berlaku, mitra, implementasi.</p>
-<div id="lerr" class="err" role="alert"></div>
-<label>Username<input id="u" autocomplete="username"></label>
-<label>Kata sandi<input id="p" type="password" autocomplete="current-password"></label>
-<button class="btn pri" id="bLogin" style="width:100%">Masuk</button>
-<p class="mut">Lupa kata sandi? <a id="reset" href="https://wa.me/6287871500533?text=Halo%20Admin%2C%20mohon%20reset%20kata%20sandi%20akun%20Monev%20Kerja%20Sama%20BBPOM%20Mataram%20saya.%20Username%3A%20" target="_blank" rel="noopener">Minta reset via WhatsApp</a></p>
-<p class="mut">Akun contoh: admin/admin123, ketua/ketua123, petugas/petugas123, uin/uin123</p>
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">POM</div>
+      <h1 class="login-title">Monev Kerja Sama</h1>
+      <p class="login-subtitle">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
+    </div>
+
+    <div id="lerr" class="login-err hide" role="alert"></div>
+
+    <form id="fLogin" onsubmit="return false;" class="form-grid">
+      <div>
+        <label class="field-label" for="u">Nama Pengguna (Username)</label>
+        <input id="u" autocomplete="username" placeholder="Masukkan username akun..." required autofocus>
+      </div>
+      <div>
+        <label class="field-label" for="p">Kata Sandi</label>
+        <input id="p" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi..." required>
+      </div>
+      <button class="btn pri" id="bLogin" style="width:100%; padding:11px; margin-top:6px; font-size:13.5px;">
+        Masuk Aplikasi &rarr;
+      </button>
+    </form>
+
+    <div style="margin-top:22px; text-align:center; font-size:12px; border-top:1px solid var(--border-light); padding-top:16px;" class="mut">
+      <p>Lupa kata sandi? <a id="reset" href="https://wa.me/6287871500533?text=Halo%20Admin%2C%20mohon%20reset%20kata%20sandi%20akun%20Monev%20Kerja%20Sama%20BBPOM%20Mataram%20saya.%20Username%3A%20" target="_blank" rel="noopener" style="color:var(--brand-emerald); font-weight:700; text-decoration:none;">Minta reset via WhatsApp</a></p>
+      <p style="margin-top:8px; font-size:11px; color:#94a3b8;">Akun contoh: admin/admin123, ketua/ketua123, petugas/petugas123, uin/uin123</p>
+    </div>
+  </div>
 </div>
 
-<div id="app" class="hide">
-<nav id="nav" aria-label="Menu utama"></nav>
-<main>
-<section id="v-dash">
-<h1>Kerja sama dalam satu pandangan.</h1>
-<p class="mut">Status MoU/PKS, masa berlaku, dan capaian implementasi BBPOM Mataram.</p>
-<div class="grid" id="cards"></div>
-<div class="row2">
-<div class="card plain"><b>Per instansi</b><canvas id="c1" width="480" height="260" style="width:100%"></canvas></div>
-<div class="card plain"><b>Implementasi per bulan</b><canvas id="c2" width="480" height="260" style="width:100%"></canvas><p class="mut" id="h90"></p></div>
-</div>
-</section>
-<section id="v-ks" class="hide">
-<h2>Daftar MoU / PKS</h2>
-<form class="box" id="fKs">
-<div class="row3"><label>Nomor<input name="nomor" required></label><label>Jenis<select name="jenis"><option>MoU</option><option>PKS</option></select></label><label>Instansi<select name="instansi_id" id="ksIns"></select></label></div>
-<label>Judul / Tentang<input name="judul" required></label>
-<div class="row3"><label>Tgl TTD<input type="date" name="tgl_ttd"></label><label>Tgl mulai<input type="date" name="tgl_mulai"></label><label>Tgl selesai<input type="date" name="tgl_selesai"></label></div>
-<div class="row2"><label>PIC<input name="pic" placeholder="Nama / no WA"></label><label><br><input type="checkbox" name="tanpa_batas" style="width:auto"> Tanpa batas waktu</label></div>
-<input type="hidden" name="id"><input type="hidden" name="file_ttd_id"><input type="hidden" name="file_ttd_nama">
-<div><button class="btn pri">Simpan kerja sama</button> <button type="button" class="btn" id="ksReset">Bersihkan</button></div>
-</form>
-<div id="ksList"></div>
-</section>
-<section id="v-impl" class="hide">
-<h2>Implementasi</h2>
-<form class="box" id="fImpl">
-<div class="row2"><label>Kerja sama<select name="kerjasama_id" id="imKs"></select></label><label>Tanggal<input type="date" name="tanggal" required></label></div>
-<label>Kegiatan<input name="kegiatan" required></label>
-<div class="row3"><label>Lokasi<input name="lokasi"></label><label>Realisasi<input name="realisasi" placeholder="cth: 11.76"></label><label>Bukti (PDF/JPG/PNG, maks 10MB)<input type="file" id="bukti" accept=".pdf,.jpg,.jpeg,.png"></label></div>
-<label>Hasil<textarea name="hasil" rows="2"></textarea></label>
-<input type="hidden" name="id"><input type="hidden" name="bukti_id"><input type="hidden" name="bukti_nama">
-<div><button class="btn pri">Simpan implementasi</button></div>
-</form>
-<div id="implList"></div>
-</section>
-<section id="v-ins" class="hide"><h2>Instansi mitra</h2>
-<form class="box" id="fIns"><div class="row3"><label>Nama<input name="nama" required></label><label>Jenis<select name="jenis"><option>Pemda</option><option>Kampus</option><option>Profesi</option><option>Vertikal</option><option>Lainnya</option></select></label><label>Kontak<input name="kontak"></label></div><input type="hidden" name="id"><div><button class="btn pri">Simpan instansi</button></div></form>
-<div id="insList"></div></section>
-<section id="v-dok" class="hide"><h2>Dokumen pendukung</h2>
-<form class="box" id="fDok"><div class="row3"><label>Kerja sama<select name="kerjasama_id" id="dkKs"></select></label><label>Kategori<select name="kategori"><option value="draft">draft</option><option value="reviu">reviu</option><option value="kajian">kajian</option><option value="renaksi">rencana aksi</option><option value="surat">surat</option><option value="naskah_ttd">naskah ttd</option><option value="laporan_ttd">laporan ttd</option><option value="dokumentasi">dokumentasi</option><option value="monev">monev</option></select></label><label>File<input type="file" id="dokFile" accept=".pdf,.jpg,.jpeg,.png"></label></div><div><button class="btn pri">Unggah dokumen</button></div><p class="mut" id="dokMsg"></p></form>
-<div id="dokList"></div></section>
-<section id="v-users" class="hide"><h2>Pengguna</h2>
-<form class="box" id="fUser"><div class="row3"><label>Username<input name="username" required></label><label>Kata sandi baru<input name="password" placeholder="kosongkan bila tak ganti"></label><label>Role<select name="role"><option>admin</option><option>ketua</option><option>petugas</option><option>user</option></select></label></div><div class="row2"><label>Instansi (wajib utk role user)<select name="instansi_id" id="uIns"></select></label><label>Nama<input name="nama"></label></div><div><button class="btn pri">Simpan pengguna</button></div></form>
-<div id="userList"></div></section>
-<section id="v-imp" class="hide"><h2>Impor massal</h2>
-<div class="card"><p class="mut">Impor sekali dari hasil scan folder lama. Lewati baris yang ID-nya sudah ada, aman diulang.</p>
-<p class="mut" id="impInfo">Pilih 4 file CSV: instansi, kerjasama, ruanglingkup, implementasi.</p>
-<div class="row2"><label>instansi<input type="file" id="cIns" accept=".csv"></label><label>kerjasama<input type="file" id="cKs" accept=".csv"></label></div>
-<div class="row2"><label>ruanglingkup<input type="file" id="cRl" accept=".csv"></label><label>implementasi<input type="file" id="cIm" accept=".csv"></label></div>
-<div><button class="btn pri" id="bImp">Kirim impor</button> <span class="mut" id="impMsg"></span></div></div></section>
-</main>
-</div>
-<footer>Gaya: DESIGN.md dial ENERGY 2 / RHYTHM 2 / MOTION 1. Data: Google Sheet + Drive via Apps Script.</footer>
+<!-- Main App Layout (Authenticated) -->
+<div id="app" class="app-layout hide">
+  
+  <!-- Backdrop for Mobile Sidebar -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="toggleMobileSidebar()"></div>
 
+  <!-- Left Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">POM</div>
+      <div>
+        <div class="sidebar-title">Monev BBPOM</div>
+        <div class="sidebar-subtitle">BBPOM di Mataram</div>
+      </div>
+    </div>
+
+    <div class="sidebar-content">
+      <div class="sidebar-group-title">Menu Utama</div>
+      <nav class="sidebar-nav" id="sidebarNav">
+        <!-- Rendered dynamically -->
+      </nav>
+
+      <div id="adminNavGroup" class="hide">
+        <div class="sidebar-group-title" style="margin-top:18px;">Administrasi</div>
+        <nav class="sidebar-nav" id="adminSidebarNav">
+          <!-- Rendered dynamically -->
+        </nav>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-info">
+          <div class="user-avatar" id="uAvatar">AD</div>
+          <div class="user-details">
+            <div class="user-name" id="uName">Administrator</div>
+            <div class="user-role-badge" id="uRole">Admin</div>
+          </div>
+        </div>
+        <button class="btn-icon-logout" id="bLogout" title="Keluar">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Viewport -->
+  <div class="main-viewport">
+    
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" onclick="toggleMobileSidebar()" aria-label="Toggle Menu">
+          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="page-breadcrumb">
+          <span>Portal Monev</span>
+          <span>&rsaquo;</span>
+          <strong id="breadcrumbCurrent">Dashboard</strong>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="status-pill-server">
+          <span class="server-dot"></span>
+          <span>Google Apps Script Live</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="page-content">
+
+      <!-- ================= DASHBOARD VIEW ================= -->
+      <section id="v-dash">
+        <div class="content-header">
+          <div>
+            <h1>Dashboard Monitoring & Evaluasi</h1>
+            <p>Ringkasan real-time status kerja sama, masa aktif MoU/PKS, dan realisasi program lintas sektor.</p>
+          </div>
+          <button class="btn sec" onclick="load('dash')">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            Segarkan Data
+          </button>
+        </div>
+
+        <!-- H-90 Urgent Banner -->
+        <div id="h90-banner" class="urgent-banner hide">
+          <div class="urgent-banner-left">
+            <span class="urgent-badge">&#9888; H-90 Kritis</span>
+            <div>
+              <div class="urgent-banner-title" id="h90-title">Perjanjian Kerja Sama Mendekati Tenggat Waktu</div>
+              <div class="urgent-banner-desc" id="h90-desc">Perlu koordinasi segera dengan mitra untuk perpanjangan atau penyusunan adendum.</div>
+            </div>
+          </div>
+          <button class="btn sm" style="background:#d97706; color:#fff;" onclick="switchNav('ks', 'hampir_berakhir')">
+            Tinjau Dokumen &rarr;
+          </button>
+        </div>
+
+        <!-- KPI Metrics Row -->
+        <div class="metrics-row" id="kpiCards">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Distribusi Kerja Sama per Instansi</span>
+              <span class="mut">MoU / PKS</span>
+            </div>
+            <div class="card-body">
+              <canvas id="c1" width="500" height="240" style="width:100%; display:block;"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Tren Implementasi Kegiatan per Bulan</span>
+              <span class="mut">Capaian Realisasi</span>
+            </div>
+            <div class="card-body">
+              <canvas id="c2" width="500" height="240" style="width:100%; display:block;"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MOU / PKS VIEW ================= -->
+      <section id="v-ks" class="hide">
+        <div class="content-header">
+          <div>
+            <h1>Daftar Dokumen MoU & PKS</h1>
+            <p>Kelola naskah kesepahaman dan perjanjian kerja sama, pantau masa berlaku, dan kontak PIC.</p>
+          </div>
+          <button class="btn pri" id="bAddKs" onclick="openKsModal()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Tambah Kerja Sama
+          </button>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-input-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="ksSearch" placeholder="Cari nomor, judul, instansi, atau PIC..." oninput="renderKsTable()">
+          </div>
+          <div class="filter-group" id="ksFilterGroup">
+            <button class="filter-btn active" data-filter="all" onclick="setKsFilter('all')">Semua</button>
+            <button class="filter-btn" data-filter="aktif" onclick="setKsFilter('aktif')">Aktif</button>
+            <button class="filter-btn" data-filter="hampir_berakhir" onclick="setKsFilter('hampir_berakhir')">H-90 (Kritis)</button>
+            <button class="filter-btn" data-filter="kedaluwarsa" onclick="setKsFilter('kedaluwarsa')">Kedaluwarsa</button>
+            <button class="filter-btn" data-filter="tanpa_batas" onclick="setKsFilter('tanpa_batas')">Tanpa Batas</button>
+          </div>
+        </div>
+
+        <div class="table-wrapper" id="ksTableBox">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- ================= IMPLEMENTASI VIEW ================= -->
+      <section id="v-impl" class="hide">
+        <div class="content-header">
+          <div>
+            <h1>Realisasi & Implementasi Program</h1>
+            <p>Pencatatan kegiatan nyata di lapangan, progres capaian kerja sama, dan arsip bukti pelaksanaan.</p>
+          </div>
+          <button class="btn pri" id="bAddImpl" onclick="openImplModal()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Catat Realisasi
+          </button>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-input-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="implSearch" placeholder="Cari kegiatan, lokasi, hasil..." oninput="renderImplTable()">
+          </div>
+        </div>
+
+        <div class="table-wrapper" id="implTableBox">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- ================= INSTANSI MITRA VIEW ================= -->
+      <section id="v-ins" class="hide">
+        <div class="content-header">
+          <div>
+            <h1>Instansi Mitra Strategis</h1>
+            <p>Basis data pemangku kepentingan (Pemda NTB, Universitas/Kampus, Organisasi Profesi, dan Lembaga Vertikal).</p>
+          </div>
+          <button class="btn pri" id="bAddIns" onclick="openInsModal()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Tambah Mitra
+          </button>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-input-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="insSearch" placeholder="Cari nama instansi, kategori..." oninput="renderInsTable()">
+          </div>
+        </div>
+
+        <div class="table-wrapper" id="insTableBox">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- ================= DOKUMEN VIEW ================= -->
+      <section id="v-dok" class="hide">
+        <div class="content-header">
+          <div>
+            <h1>Arsip Dokumen Pendukung</h1>
+            <p>Penyimpanan naskah TTD, telaah hukum, kajian, rencana aksi, dokumentasi kegiatan, dan laporan berkala.</p>
+          </div>
+          <button class="btn pri" id="bAddDok" onclick="openDokModal()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            Unggah Berkas
+          </button>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-input-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="dokSearch" placeholder="Cari nama file, kategori..." oninput="renderDokTable()">
+          </div>
+        </div>
+
+        <div class="table-wrapper" id="dokTableBox">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- ================= PENGGUNA VIEW (ADMIN) ================= -->
+      <section id="v-users" class="hide">
+        <div class="content-header">
+          <div>
+            <h1>Manajemen Akun Pengguna</h1>
+            <p>Otorisasi hak akses dan peran (Administrator, Ketua Tim, Petugas BBPOM, dan Mitra Eksternal).</p>
+          </div>
+          <button class="btn pri" onclick="openUserModal()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+            Tambah Pengguna
+          </button>
+        </div>
+
+        <div class="table-wrapper" id="userTableBox">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- ================= IMPOR MASSAL VIEW (ADMIN) ================= -->
+      <section id="v-imp" class="hide">
+        <div class="card" style="max-width:820px; margin:0 auto;">
+          <div class="card-header">
+            <span class="card-title">Impor Data Massal (CSV)</span>
+            <span class="mut">Migrasi Arsip Lama</span>
+          </div>
+          <div class="card-body">
+            <p class="mut" style="margin-bottom:20px; line-height:1.6;">
+              Gunakan formulir ini untuk melakukan impor massal 4 berkas CSV hasil pemindaian arsip lama. Baris data dengan ID yang telah ada di Google Sheet akan otomatis dilewati sehingga aman diulang tanpa risiko duplikasi data.
+            </p>
+
+            <div class="form-grid">
+              <div class="form-row-2">
+                <div>
+                  <label class="field-label">1. File Instansi (.csv)</label>
+                  <input type="file" id="cIns" accept=".csv">
+                </div>
+                <div>
+                  <label class="field-label">2. File Kerja Sama (.csv)</label>
+                  <input type="file" id="cKs" accept=".csv">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div>
+                  <label class="field-label">3. File Ruang Lingkup (.csv)</label>
+                  <input type="file" id="cRl" accept=".csv">
+                </div>
+                <div>
+                  <label class="field-label">4. File Implementasi (.csv)</label>
+                  <input type="file" id="cIm" accept=".csv">
+                </div>
+              </div>
+
+              <div style="margin-top:10px; display:flex; align-items:center; gap:14px;">
+                <button class="btn pri" id="bImp">Mulai Impor CSV</button>
+                <span class="mut" id="impMsg" style="font-weight:600;">Siap mengunggah data CSV.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL FORMS (SLIDE-OVER / DIALOG)                                         -->
+<!-- ========================================================================= -->
+
+<!-- Modal: Kerja Sama (MoU / PKS) -->
+<div id="mKsOverlay" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title" id="mKsTitle">Formulir Kerja Sama</div>
+      <button class="modal-close" onclick="closeModal('mKsOverlay')">&times;</button>
+    </div>
+    <form id="fKs">
+      <div class="modal-body form-grid">
+        <input type="hidden" name="id">
+        <input type="hidden" name="file_ttd_id">
+        <input type="hidden" name="file_ttd_nama">
+
+        <div class="form-row-3">
+          <div>
+            <label class="field-label">Nomor Dokumen *</label>
+            <input name="nomor" placeholder="cth: HK.07.01..." required>
+          </div>
+          <div>
+            <label class="field-label">Jenis Dokumen</label>
+            <select name="jenis">
+              <option value="MoU">MoU (Kesepahaman)</option>
+              <option value="PKS">PKS (Perjanjian Kerja Sama)</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">Instansi Mitra *</label>
+            <select name="instansi_id" id="ksIns" required></select>
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label">Judul / Ruang Lingkup Kerja Sama *</label>
+          <textarea name="judul" rows="2" placeholder="Tentang sinergi pengawasan obat dan makanan..." required></textarea>
+        </div>
+
+        <div class="form-row-3">
+          <div>
+            <label class="field-label">Tanggal TTD</label>
+            <input type="date" name="tgl_ttd">
+          </div>
+          <div>
+            <label class="field-label">Tanggal Mulai</label>
+            <input type="date" name="tgl_mulai">
+          </div>
+          <div>
+            <label class="field-label">Tanggal Selesai</label>
+            <input type="date" name="tgl_selesai" id="ksTglSelesai">
+          </div>
+        </div>
+
+        <div class="form-row-2" style="align-items:center;">
+          <div>
+            <label class="field-label">Nama / Kontak PIC Mitra</label>
+            <input name="pic" placeholder="cth: Dr. Ahmad / 08123456789">
+          </div>
+          <div style="padding-top:18px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13px;">
+              <input type="checkbox" name="tanpa_batas" id="ksTanpaBatas" onchange="toggleTanpaBatas(this)">
+              <span>Berlaku tanpa batas waktu</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn sec" onclick="closeModal('mKsOverlay')">Batal</button>
+        <button type="submit" class="btn pri">Simpan Dokumen</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Implementasi -->
+<div id="mImplOverlay" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title" id="mImplTitle">Catat Realisasi Implementasi</div>
+      <button class="modal-close" onclick="closeModal('mImplOverlay')">&times;</button>
+    </div>
+    <form id="fImpl">
+      <div class="modal-body form-grid">
+        <input type="hidden" name="id">
+        <input type="hidden" name="bukti_id">
+        <input type="hidden" name="bukti_nama">
+
+        <div class="form-row-2">
+          <div>
+            <label class="field-label">Terkait MoU / PKS *</label>
+            <select name="kerjasama_id" id="imKs" required></select>
+          </div>
+          <div>
+            <label class="field-label">Tanggal Kegiatan *</label>
+            <input type="date" name="tanggal" required>
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label">Nama Kegiatan *</label>
+          <input name="kegiatan" placeholder="cth: Kuliah Tamu Keamanan Pangan bagi Mahasiswa..." required>
+        </div>
+
+        <div class="form-row-2">
+          <div>
+            <label class="field-label">Lokasi Kegiatan</label>
+            <input name="lokasi" placeholder="cth: Aula FKIP Unram, Mataram">
+          </div>
+          <div>
+            <label class="field-label">Nilai Realisasi / Output</label>
+            <input name="realisasi" placeholder="cth: 120 peserta / 100%">
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label">Ringkasan Hasil / Catatan Pelaksanaan</label>
+          <textarea name="hasil" rows="3" placeholder="Hasil yang dicapai, tindak lanjut evaluasi..."></textarea>
+        </div>
+
+        <div>
+          <label class="field-label">Unggah Bukti (PDF / JPG / PNG, maks 10MB)</label>
+          <input type="file" id="bukti" accept=".pdf,.jpg,.jpeg,.png">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn sec" onclick="closeModal('mImplOverlay')">Batal</button>
+        <button type="submit" class="btn pri" id="bSaveImpl">Simpan Realisasi</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Instansi Mitra -->
+<div id="mInsOverlay" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title" id="mInsTitle">Kelola Instansi Mitra</div>
+      <button class="modal-close" onclick="closeModal('mInsOverlay')">&times;</button>
+    </div>
+    <form id="fIns">
+      <div class="modal-body form-grid">
+        <input type="hidden" name="id">
+
+        <div>
+          <label class="field-label">Nama Instansi Mitra *</label>
+          <input name="nama" placeholder="cth: Universitas Mataram" required>
+        </div>
+
+        <div class="form-row-2">
+          <div>
+            <label class="field-label">Kategori Instansi</label>
+            <select name="jenis">
+              <option value="Pemda">Pemerintah Daerah (Pemda)</option>
+              <option value="Kampus">Perguruan Tinggi (Kampus)</option>
+              <option value="Profesi">Organisasi Profesi</option>
+              <option value="Vertikal">Instansi Vertikal</option>
+              <option value="Lainnya">Lainnya / Swasta</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">Kontak / Narahubung</label>
+            <input name="kontak" placeholder="No Telp / Email resmi">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn sec" onclick="closeModal('mInsOverlay')">Batal</button>
+        <button type="submit" class="btn pri">Simpan Mitra</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Dokumen Pendukung -->
+<div id="mDokOverlay" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">Unggah Dokumen Pendukung</div>
+      <button class="modal-close" onclick="closeModal('mDokOverlay')">&times;</button>
+    </div>
+    <form id="fDok">
+      <div class="modal-body form-grid">
+        <div>
+          <label class="field-label">Pilih Kerja Sama *</label>
+          <select name="kerjasama_id" id="dkKs" required></select>
+        </div>
+
+        <div class="form-row-2">
+          <div>
+            <label class="field-label">Kategori Dokumen</label>
+            <select name="kategori">
+              <option value="draft">Draft Naskah</option>
+              <option value="reviu">Reviu / Telaah Hukum</option>
+              <option value="kajian">Kajian Urgensi</option>
+              <option value="renaksi">Rencana Aksi</option>
+              <option value="surat">Surat Menyurat</option>
+              <option value="naskah_ttd">Naskah Asli TTD (Scan)</option>
+              <option value="laporan_ttd">Laporan TTD</option>
+              <option value="dokumentasi">Foto & Dokumentasi</option>
+              <option value="monev">Laporan Monev</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">Pilih Berkas *</label>
+            <input type="file" id="dokFile" accept=".pdf,.jpg,.jpeg,.png" required>
+          </div>
+        </div>
+
+        <div id="dokMsg" class="mut" style="font-weight:600;"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn sec" onclick="closeModal('mDokOverlay')">Batal</button>
+        <button type="submit" class="btn pri" id="bSaveDok">Unggah ke Drive</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Pengguna (Admin) -->
+<div id="mUserOverlay" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title" id="mUserTitle">Akun Pengguna Sistem</div>
+      <button class="modal-close" onclick="closeModal('mUserOverlay')">&times;</button>
+    </div>
+    <form id="fUser">
+      <div class="modal-body form-grid">
+        <div class="form-row-3">
+          <div>
+            <label class="field-label">Username *</label>
+            <input name="username" placeholder="cth: petugas_subbag" required>
+          </div>
+          <div>
+            <label class="field-label">Kata Sandi Baru</label>
+            <input name="password" placeholder="Kosongkan jika tak diubah">
+          </div>
+          <div>
+            <label class="field-label">Role Akses</label>
+            <select name="role">
+              <option value="petugas">Petugas</option>
+              <option value="ketua">Ketua Tim</option>
+              <option value="admin">Administrator</option>
+              <option value="user">Mitra Eksternal (User)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div>
+            <label class="field-label">Nama Lengkap</label>
+            <input name="nama" placeholder="Nama lengkap petugas / PIC">
+          </div>
+          <div>
+            <label class="field-label">Instansi Mitra (Wajib untuk role User)</label>
+            <select name="instansi_id" id="uIns"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn sec" onclick="closeModal('mUserOverlay')">Batal</button>
+        <button type="submit" class="btn pri">Simpan Pengguna</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-box"></div>
+
+<!-- ========================================================================= -->
+<!-- JAVASCRIPT APPLICATION CORE                                               -->
+<!-- ========================================================================= -->
 <script>
 var API_URL = 'https://script.google.com/macros/s/AKfycbzaC9pXqmaUot3YkyY6802rp9py77CNwuPrHaIVGYMYYlxHhu7SAVYd_RR6decdLg4k/exec';
-var S = { token: localStorage.getItem('monev_t') || '', me: null, ks: [], ins: [] };
+var S = {
+  token: localStorage.getItem('monev_t') || '',
+  me: null,
+  ks: [],
+  ins: [],
+  impl: [],
+  dok: [],
+  users: [],
+  ksFilter: 'all',
+  currentTab: 'dash'
+};
+
 function api(action, extra) {
-  extra = extra || {}; extra.action = action; extra.token = S.token;
-  return fetch(API_URL, { method: 'POST', body: JSON.stringify(extra) }).then(function (r) { return r.json(); });
+  extra = extra || {};
+  extra.action = action;
+  extra.token = S.token;
+  return fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(extra)
+  }).then(function (r) {
+    return r.json();
+  });
 }
-function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-function can(a) {
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+  });
+}
+
+function showToast(msg, type) {
+  type = type || 'info';
+  var box = document.getElementById('toast-box');
+  var el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.textContent = msg;
+  box.appendChild(el);
+  setTimeout(function () {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.2s';
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 200);
+  }, 3500);
+}
+
+function can(action) {
   var r = S.me && S.me.role;
   if (r === 'admin') return true;
-  if (a === 'ks_add') return r === 'ketua';
-  if (a === 'impl_add') return r === 'petugas' || r === 'user';
-  if (a === 'impl_del') return r === 'petugas' || r === 'user';
-  if (a === 'ins') return r === 'ketua';
-  if (a === 'dok') return true;
+  if (action === 'ks_add') return r === 'ketua';
+  if (action === 'impl_add') return r === 'petugas' || r === 'user';
+  if (action === 'impl_del') return r === 'petugas' || r === 'user';
+  if (action === 'ins') return r === 'ketua';
+  if (action === 'dok') return true;
   return false;
 }
-document.getElementById('bLogin').onclick = function () {
-  document.getElementById('lerr').textContent = 'Menghubungi server...';
-  api('login', { username: document.getElementById('u').value.trim(), password: document.getElementById('p').value }).then(function (r) {
-    if (!r.ok) { document.getElementById('lerr').textContent = r.error || 'Login gagal.'; return; }
-    S.token = r.token; S.me = r.me; localStorage.setItem('monev_t', S.token); boot();
-  }).catch(function (e) { document.getElementById('lerr').textContent = 'Server tak terjangkau: ' + e; });
+
+// Modal handling
+function openModal(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.add('open');
+}
+function closeModal(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+function toggleTanpaBatas(chk) {
+  var dt = document.getElementById('ksTglSelesai');
+  if (chk.checked) {
+    dt.value = '';
+    dt.disabled = true;
+  } else {
+    dt.disabled = false;
+  }
+}
+
+function toggleMobileSidebar() {
+  var sb = document.getElementById('sidebar');
+  var bkp = document.getElementById('sidebarBackdrop');
+  if (sb.classList.contains('mobile-open')) {
+    sb.classList.remove('mobile-open');
+    bkp.classList.remove('show');
+  } else {
+    sb.classList.add('mobile-open');
+    bkp.classList.add('show');
+  }
+}
+
+// Authentication
+document.getElementById('bLogin').onclick = doLogin;
+document.getElementById('p').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+function doLogin() {
+  var u = document.getElementById('u').value.trim();
+  var p = document.getElementById('p').value;
+  var lerr = document.getElementById('lerr');
+  
+  if (!u || !p) {
+    lerr.textContent = 'Harap isi nama pengguna dan kata sandi.';
+    lerr.classList.remove('hide');
+    return;
+  }
+  
+  lerr.textContent = 'Menghubungi server...';
+  lerr.classList.remove('hide');
+
+  api('login', { username: u, password: p }).then(function (r) {
+    if (!r.ok) {
+      lerr.textContent = r.error || 'Login gagal. Periksa username dan password.';
+      return;
+    }
+    S.token = r.token;
+    S.me = r.me;
+    localStorage.setItem('monev_t', S.token);
+    lerr.classList.add('hide');
+    showToast('Selamat datang, ' + S.me.nama, 'info');
+    boot();
+  }).catch(function (e) {
+    lerr.textContent = 'Gagal menghubungi server: ' + e;
+  });
+}
+
+document.getElementById('bLogout').onclick = function () {
+  api('logout');
+  S.token = '';
+  localStorage.removeItem('monev_t');
+  location.reload();
 };
+
 function boot() {
-  document.getElementById('login').classList.add('hide'); document.getElementById('app').classList.remove('hide');
-  document.getElementById('who').textContent = S.me.nama + ' (' + S.me.role + ')';
-  var items = [['dash', 'Dashboard'], ['ks', 'MoU/PKS'], ['impl', 'Implementasi'], ['ins', 'Instansi'], ['dok', 'Dokumen']];
-  if (S.me.role === 'admin') items.push(['users', 'Pengguna'], ['imp', 'Impor']);
-  var nav = document.getElementById('nav'); nav.innerHTML = '';
-  items.forEach(function (it, i) {
-    var b = document.createElement('button'); b.textContent = it[1]; if (i === 0) b.classList.add('on');
-    b.onclick = function () {
-      nav.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); }); b.classList.add('on');
-      ['dash', 'ks', 'impl', 'ins', 'dok', 'users', 'imp'].forEach(function (v) { document.getElementById('v-' + v).classList.add('hide'); });
-      document.getElementById('v-' + it[0]).classList.remove('hide');
-      load(it[0]);
+  document.getElementById('login').classList.add('hide');
+  document.getElementById('app').classList.remove('hide');
+
+  // User card at bottom of sidebar
+  var initials = (S.me.nama || S.me.username || 'AD').slice(0, 2).toUpperCase();
+  document.getElementById('uAvatar').textContent = initials;
+  document.getElementById('uName').textContent = S.me.nama || S.me.username;
+  document.getElementById('uRole').textContent = S.me.role;
+
+  // Build Sidebar Nav
+  var mainItems = [
+    ['dash', 'Dashboard', '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>'],
+    ['ks', 'MoU & PKS', '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>'],
+    ['impl', 'Implementasi', '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>'],
+    ['ins', 'Instansi Mitra', '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>'],
+    ['dok', 'Dokumen Bukti', '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>']
+  ];
+
+  var sNav = document.getElementById('sidebarNav');
+  sNav.innerHTML = '';
+  mainItems.forEach(function (it, idx) {
+    var b = document.createElement('button');
+    b.className = 'nav-item' + (idx === 0 ? ' active' : '');
+    b.id = 'nav-btn-' + it[0];
+    b.innerHTML = it[2] + '<span>' + it[1] + '</span>';
+    b.onclick = function () { switchNav(it[0]); };
+    sNav.appendChild(b);
+  });
+
+  if (S.me.role === 'admin') {
+    document.getElementById('adminNavGroup').classList.remove('hide');
+    var adminItems = [
+      ['users', 'Pengguna', '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>'],
+      ['imp', 'Impor CSV Massal', '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>']
+    ];
+    var aNav = document.getElementById('adminSidebarNav');
+    aNav.innerHTML = '';
+    adminItems.forEach(function (it) {
+      var b = document.createElement('button');
+      b.className = 'nav-item';
+      b.id = 'nav-btn-' + it[0];
+      b.innerHTML = it[2] + '<span>' + it[1] + '</span>';
+      b.onclick = function () { switchNav(it[0]); };
+      aNav.appendChild(b);
+    });
+  }
+
+  // Permission toggles
+  if (!can('ks_add') && S.me.role !== 'admin') {
+    var bKs = document.getElementById('bAddKs');
+    if (bKs) bKs.classList.add('hide');
+  }
+  if (!can('impl_add')) {
+    var bImp = document.getElementById('bAddImpl');
+    if (bImp) bImp.classList.add('hide');
+  }
+  if (!can('ins') && S.me.role !== 'admin') {
+    var bIns = document.getElementById('bAddIns');
+    if (bIns) bIns.classList.add('hide');
+  }
+
+  switchNav('dash');
+}
+
+function switchNav(viewId, filterPreset) {
+  S.currentTab = viewId;
+
+  // Close mobile sidebar if open
+  var sb = document.getElementById('sidebar');
+  var bkp = document.getElementById('sidebarBackdrop');
+  if (sb) sb.classList.remove('mobile-open');
+  if (bkp) bkp.classList.remove('show');
+
+  // Update active state in sidebar
+  document.querySelectorAll('.nav-item').forEach(function (el) {
+    el.classList.remove('active');
+  });
+  var activeBtn = document.getElementById('nav-btn-' + viewId);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // Breadcrumb
+  var names = {
+    dash: 'Dashboard',
+    ks: 'Daftar MoU & PKS',
+    impl: 'Implementasi Program',
+    ins: 'Instansi Mitra',
+    dok: 'Arsip Dokumen',
+    users: 'Pengguna Sistem',
+    imp: 'Impor Massal'
+  };
+  document.getElementById('breadcrumbCurrent').textContent = names[viewId] || viewId;
+
+  // Toggle views
+  ['dash', 'ks', 'impl', 'ins', 'dok', 'users', 'imp'].forEach(function (v) {
+    var sec = document.getElementById('v-' + v);
+    if (sec) sec.classList.add('hide');
+  });
+  var target = document.getElementById('v-' + viewId);
+  if (target) target.classList.remove('hide');
+
+  if (filterPreset && viewId === 'ks') {
+    setKsFilter(filterPreset);
+  }
+
+  load(viewId);
+}
+
+function opt(selId, list, vf, lf, placeholder) {
+  var el = document.getElementById(selId);
+  if (!el) return;
+  el.innerHTML = '';
+  if (placeholder) {
+    var def = document.createElement('option');
+    def.value = '';
+    def.textContent = placeholder;
+    el.appendChild(def);
+  }
+  (list || []).forEach(function (x) {
+    var o = document.createElement('option');
+    o.value = x[vf];
+    o.textContent = x[lf];
+    el.appendChild(o);
+  });
+}
+
+function load(view) {
+  if (view === 'dash') {
+    api('dashboard').then(function (r) {
+      if (!r.ok) { showToast(r.error, 'error'); return; }
+      var d = r.data;
+      var c = document.getElementById('kpiCards');
+
+      function kBox(title, num, cls, meta, iconSvg) {
+        return '<div class="metric-box ' + cls + '">' +
+          '<div class="metric-box-header">' +
+            '<span class="metric-box-title">' + title + '</span>' +
+            '<div class="metric-box-icon">' + iconSvg + '</div>' +
+          '</div>' +
+          '<div class="metric-box-value">' + num + '</div>' +
+          '<div class="metric-box-meta">' + meta + '</div>' +
+        '</div>';
+      }
+
+      var iconKs = '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>';
+      var iconCheck = '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+      var iconWarn = '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+      var iconTime = '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+      var iconIns = '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>';
+      var iconImpl = '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>';
+
+      c.innerHTML = 
+        kBox('Total Kerja Sama', d.total_ks, 'metric-total', 'MoU & PKS tercatat', iconKs) +
+        kBox('Status Aktif', d.status.aktif || 0, 'metric-aktif', 'Masa berlaku aman', iconCheck) +
+        kBox('H-90 Hampir Habis', d.status.hampir_berakhir || 0, 'metric-warn', 'Kurang dari 90 hari', iconWarn) +
+        kBox('Kedaluwarsa', d.status.kedaluwarsa || 0, 'metric-danger', 'Perlu adendum/reviu', iconTime) +
+        kBox('Tanpa Batas', d.status.tanpa_batas || 0, 'metric-info', 'Perjanjian permanen', iconKs) +
+        kBox('Instansi Mitra', d.total_instansi, 'metric-total', 'Pemda, Kampus, Profesi', iconIns) +
+        kBox('Implementasi', d.total_impl, 'metric-aktif', 'Realisasi program selesai', iconImpl);
+
+      var alertBox = document.getElementById('h90-banner');
+      if (d.status.hampir_berakhir > 0) {
+        alertBox.classList.remove('hide');
+        document.getElementById('h90-title').textContent = d.status.hampir_berakhir + ' Kerja Sama Memerlukan Tindak Lanjut Segera (H-90)';
+      } else {
+        alertBox.classList.add('hide');
+      }
+
+      chartArea('c1', d.per_instansi, '#0284c7');
+      chartArea('c2', d.per_bulan, '#059669');
+    });
+  }
+
+  if (view === 'ks') {
+    Promise.all([api('list_kerjasama'), api('list_instansi')]).then(function (rs) {
+      if (!rs[0].ok) { showToast(rs[0].error, 'error'); return; }
+      S.ks = rs[0].data || [];
+      S.ins = rs[1].ok ? (rs[1].data || []) : [];
+
+      opt('ksIns', S.ins, 'id', 'nama', '-- Pilih Instansi Mitra --');
+      opt('imKs', S.ks, 'id', 'judul', '-- Pilih Kerja Sama --');
+      opt('dkKs', S.ks, 'id', 'judul', '-- Pilih Kerja Sama --');
+
+      renderKsTable();
+    });
+  }
+
+  if (view === 'impl') {
+    Promise.all([api('list_implementasi', {}), api('list_kerjasama')]).then(function (rs) {
+      if (!rs[0].ok) { showToast(rs[0].error, 'error'); return; }
+      S.impl = rs[0].data || [];
+      if (rs[1].ok) {
+        S.ks = rs[1].data || [];
+        opt('imKs', S.ks, 'id', 'judul', '-- Pilih Kerja Sama --');
+      }
+      renderImplTable();
+    });
+  }
+
+  if (view === 'ins') {
+    api('list_instansi').then(function (r) {
+      if (!r.ok) { showToast(r.error, 'error'); return; }
+      S.ins = r.data || [];
+      opt('uIns', S.ins, 'id', 'nama', '-- Khusus role User --');
+      renderInsTable();
+    });
+  }
+
+  if (view === 'dok') {
+    Promise.all([api('list_dokumen', {}), api('list_kerjasama')]).then(function (rs) {
+      if (!rs[0].ok) { showToast(rs[0].error, 'error'); return; }
+      S.dok = rs[0].data || [];
+      if (rs[1].ok) {
+        S.ks = rs[1].data || [];
+        opt('dkKs', S.ks, 'id', 'judul', '-- Pilih Kerja Sama --');
+      }
+      renderDokTable();
+    });
+  }
+
+  if (view === 'users') {
+    Promise.all([api('list_users'), api('list_instansi')]).then(function (rs) {
+      if (!rs[0].ok) { showToast(rs[0].error, 'error'); return; }
+      S.users = rs[0].data || [];
+      S.ins = rs[1].ok ? rs[1].data : [];
+      opt('uIns', S.ins, 'id', 'nama', '-- Khusus role User --');
+      renderUserTable();
+    });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// TABLE RENDERING & FILTERING
+// ---------------------------------------------------------------------------
+
+function setKsFilter(val) {
+  S.ksFilter = val;
+  var container = document.getElementById('ksFilterGroup');
+  if (container) {
+    container.querySelectorAll('.filter-btn').forEach(function (btn) {
+      if (btn.getAttribute('data-filter') === val) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+  renderKsTable();
+}
+
+function renderKsTable() {
+  var q = (document.getElementById('ksSearch').value || '').toLowerCase().trim();
+  var filtered = S.ks.filter(function (k) {
+    if (S.ksFilter !== 'all' && k.status !== S.ksFilter) return false;
+    if (!q) return true;
+    var haystack = [k.nomor, k.judul, k.instansi_nama, k.pic, k.jenis].join(' ').toLowerCase();
+    return haystack.indexOf(q) !== -1;
+  });
+
+  var box = document.getElementById('ksTableBox');
+  if (!filtered.length) {
+    box.innerHTML = '<div class="empty-state">Tidak ada data kerja sama yang cocok dengan pencarian atau filter.</div>';
+    return;
+  }
+
+  var h = '<table class="gov-table"><thead><tr>' +
+    '<th>Nomor & Jenis</th>' +
+    '<th>Instansi Mitra</th>' +
+    '<th>Judul / Ruang Lingkup</th>' +
+    '<th>Masa Berlaku</th>' +
+    '<th>Status</th>' +
+    '<th style="text-align:center;">Aksi</th>' +
+  '</tr></thead><tbody>';
+
+  filtered.forEach(function (k) {
+    var statusClass = 'b-' + k.status;
+    var statusLabel = (k.status || '').replace(/_/g, ' ');
+    var period = (k.tgl_mulai || '-') + ' s/d ' + (k.tgl_selesai || (k.tanpa_batas ? 'Tanpa Batas' : '-'));
+
+    h += '<tr>' +
+      '<td><span class="bold">' + esc(k.nomor) + '</span><br><span class="mut" style="font-weight:700;">' + esc(k.jenis) + '</span></td>' +
+      '<td><span class="bold">' + esc(k.instansi_nama) + '</span></td>' +
+      '<td style="max-width:340px;">' + esc(k.judul) + '<br><span class="mut">PIC: ' + esc(k.pic || '-') + '</span></td>' +
+      '<td style="white-space:nowrap;">' + esc(period) + '</td>' +
+      '<td><span class="badge ' + statusClass + '"><span class="badge-dot"></span>' + esc(statusLabel) + '</span></td>' +
+      '<td style="text-align:center; white-space:nowrap;">' +
+        '<button class="btn sec sm" data-edit-ks="' + k.id + '">Ubah</button> ' +
+        '<button class="btn sm btn-wa" data-wa-ks="' + esc(k.pic) + '" data-wa-judul="' + esc(k.judul) + '">WA PIC</button>' +
+      '</td>' +
+    '</tr>';
+  });
+
+  h += '</tbody></table>';
+  box.innerHTML = h;
+
+  box.querySelectorAll('[data-edit-ks]').forEach(function (btn) {
+    btn.onclick = function () {
+      var id = btn.getAttribute('data-edit-ks');
+      var item = S.ks.filter(function (x) { return x.id === id; })[0];
+      if (item) editKs(item);
     };
-    nav.appendChild(b);
   });
-  var out = document.createElement('button'); out.textContent = 'Keluar'; out.style.marginLeft = 'auto';
-  out.onclick = function () { api('logout'); S.token = ''; localStorage.removeItem('monev_t'); location.reload(); };
-  nav.appendChild(out);
-  load('dash');
-}
-function opt(sel, list, vf, lf) {
-  var el = document.getElementById(sel); el.innerHTML = '';
-  list.forEach(function (x) { var o = document.createElement('option'); o.value = x[vf]; o.textContent = x[lf]; el.appendChild(o); });
-}
-function load(v) {
-  if (v === 'dash') api('dashboard').then(function (r) {
-    if (!r.ok) return;
-    var d = r.data, c = document.getElementById('cards');
-    function card(l, n, g) { return '<div class="card ' + g + '"><div class="n">' + n + '</div><div class="l">' + l + '</div></div>'; }
-    c.innerHTML = card('Total kerja sama', d.total_ks, 'g2') + card('Aktif', d.status.aktif || 0, 'g1') + card('Hampir berakhir H-90', d.status.hampir_berakhir || 0, 'g3') + card('Kedaluwarsa', d.status.kedaluwarsa || 0, 'g4') + card('Tanpa batas', d.status.tanpa_batas || 0, 'g2') + card('Instansi', d.total_instansi, 'g1') + card('Implementasi', d.total_impl, 'g1');
-    if (d.status.hampir_berakhir) document.getElementById('h90').textContent = d.status.hampir_berakhir + ' kerja sama perlu tindak lanjut perpanjangan.';
-    area('c1', d.per_instansi, '#9fc2ff'); area('c2', d.per_bulan, '#7fe0a8');
+
+  box.querySelectorAll('[data-wa-ks]').forEach(function (btn) {
+    btn.onclick = function () {
+      var picRaw = btn.getAttribute('data-wa-ks') || '';
+      var judul = btn.getAttribute('data-wa-judul') || '';
+      var num = picRaw.replace(/\D/g, '');
+      if (num.indexOf('08') === 0) num = '62' + num.slice(1);
+      if (!num) {
+        showToast('Kontak PIC belum memiliki nomor WhatsApp.', 'error');
+        return;
+      }
+      var text = 'Halo, terkait kerja sama dengan BBPOM Mataram mengenai "' + judul + '", kami ingin berkoordinasi mengenai tindak lanjut masa berlaku dokumen. Terima kasih.';
+      window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(text), '_blank');
+    };
   });
-  if (v === 'ks') Promise.all([api('list_kerjasama'), api('list_instansi')]).then(function (rs) {
-    if (!rs[0].ok) return; S.ks = rs[0].data; S.ins = rs[1].ok ? rs[1].data : [];
-    opt('ksIns', S.ins, 'id', 'nama'); opt('imKs', S.ks, 'id', 'judul'); opt('dkKs', S.ks, 'id', 'judul');
-    var h = '<table><tr><th>Nomor</th><th>Judul</th><th>Instansi</th><th>Berlaku</th><th>Status</th><th>Aksi</th></tr>';
-    S.ks.forEach(function (k) {
-      h += '<tr><td>' + esc(k.nomor) + '<br><span class="mut">' + esc(k.jenis) + '</span></td><td>' + esc(k.judul) + '<br><span class="mut">PIC: ' + esc(k.pic) + '</span></td><td>' + esc(k.instansi_nama) + '</td><td>' + esc(k.tgl_mulai) + ' s/d ' + esc(k.tgl_selesai || (k.tanpa_batas ? 'tanpa batas' : '')) + '</td><td><span class="badge b-' + k.status + '">' + k.status.replace(/_/g, ' ') + '</span></td><td><button class="btn" data-e="' + k.id + '">Ubah</button> <button class="btn" data-wa="' + esc(k.pic) + '">WA PIC</button></td></tr>';
+}
+
+function renderImplTable() {
+  var q = (document.getElementById('implSearch').value || '').toLowerCase().trim();
+  var filtered = S.impl.filter(function (x) {
+    if (!q) return true;
+    var haystack = [x.kegiatan, x.lokasi, x.hasil, x.tanggal, x.realisasi].join(' ').toLowerCase();
+    return haystack.indexOf(q) !== -1;
+  });
+
+  var box = document.getElementById('implTableBox');
+  if (!filtered.length) {
+    box.innerHTML = '<div class="empty-state">Belum ada catatan implementasi program.</div>';
+    return;
+  }
+
+  var h = '<table class="gov-table"><thead><tr>' +
+    '<th>Tanggal</th>' +
+    '<th>Kegiatan</th>' +
+    '<th>Lokasi</th>' +
+    '<th>Realisasi</th>' +
+    '<th>Hasil & Evaluasi</th>' +
+    '<th style="text-align:center;">Bukti</th>' +
+  '</tr></thead><tbody>';
+
+  filtered.forEach(function (x) {
+    var dlBtn = x.bukti_id 
+      ? '<button class="btn sec sm" data-dl="' + x.bukti_id + '">Unduh</button>'
+      : '<span class="mut">-</span>';
+
+    h += '<tr>' +
+      '<td><span class="bold">' + esc(x.tanggal) + '</span></td>' +
+      '<td><span class="bold">' + esc(x.kegiatan) + '</span></td>' +
+      '<td>' + esc(x.lokasi || '-') + '</td>' +
+      '<td><span class="badge b-aktif">' + esc(x.realisasi || '-') + '</span></td>' +
+      '<td style="max-width:340px;">' + esc(x.hasil || '-') + '</td>' +
+      '<td style="text-align:center;">' + dlBtn + '</td>' +
+    '</tr>';
+  });
+
+  h += '</tbody></table>';
+  box.innerHTML = h;
+
+  box.querySelectorAll('[data-dl]').forEach(function (btn) {
+    btn.onclick = function () {
+      dl(btn.getAttribute('data-dl'));
+    };
+  });
+}
+
+function renderInsTable() {
+  var q = (document.getElementById('insSearch').value || '').toLowerCase().trim();
+  var filtered = S.ins.filter(function (x) {
+    if (!q) return true;
+    var haystack = [x.nama, x.jenis, x.kontak].join(' ').toLowerCase();
+    return haystack.indexOf(q) !== -1;
+  });
+
+  var box = document.getElementById('insTableBox');
+  if (!filtered.length) {
+    box.innerHTML = '<div class="empty-state">Belum ada data instansi mitra terdaftar.</div>';
+    return;
+  }
+
+  var h = '<table class="gov-table"><thead><tr>' +
+    '<th>Nama Instansi Mitra</th>' +
+    '<th>Kategori</th>' +
+    '<th>Kontak / Narahubung</th>' +
+    '<th style="text-align:center;">Aksi</th>' +
+  '</tr></thead><tbody>';
+
+  filtered.forEach(function (x) {
+    h += '<tr>' +
+      '<td><span class="bold">' + esc(x.nama) + '</span></td>' +
+      '<td><span class="badge b-tanpa_batas">' + esc(x.jenis) + '</span></td>' +
+      '<td>' + esc(x.kontak || '-') + '</td>' +
+      '<td style="text-align:center;">' +
+        '<button class="btn sec sm" data-edit-ins="' + x.id + '">Ubah</button>' +
+      '</td>' +
+    '</tr>';
+  });
+
+  h += '</tbody></table>';
+  box.innerHTML = h;
+
+  box.querySelectorAll('[data-edit-ins]').forEach(function (btn) {
+    btn.onclick = function () {
+      var item = S.ins.filter(function (x) { return x.id === btn.getAttribute('data-edit-ins'); })[0];
+      if (item) editIns(item);
+    };
+  });
+}
+
+function renderDokTable() {
+  var q = (document.getElementById('dokSearch').value || '').toLowerCase().trim();
+  var filtered = S.dok.filter(function (x) {
+    if (!q) return true;
+    var haystack = [x.nama_file, x.kategori, x.tanggal].join(' ').toLowerCase();
+    return haystack.indexOf(q) !== -1;
+  });
+
+  var box = document.getElementById('dokTableBox');
+  if (!filtered.length) {
+    box.innerHTML = '<div class="empty-state">Belum ada arsip berkas yang diunggah.</div>';
+    return;
+  }
+
+  var h = '<table class="gov-table"><thead><tr>' +
+    '<th>Tanggal Unggah</th>' +
+    '<th>Kategori Berkas</th>' +
+    '<th>Nama File</th>' +
+    '<th style="text-align:center;">Aksi</th>' +
+  '</tr></thead><tbody>';
+
+  filtered.forEach(function (x) {
+    h += '<tr>' +
+      '<td>' + esc(x.tanggal) + '</td>' +
+      '<td><span class="badge b-tanpa_batas">' + esc(x.kategori) + '</span></td>' +
+      '<td><span class="bold">' + esc(x.nama_file) + '</span></td>' +
+      '<td style="text-align:center;">' +
+        '<button class="btn sec sm" data-dl="' + x.drive_id + '">Unduh</button>' +
+      '</td>' +
+    '</tr>';
+  });
+
+  h += '</tbody></table>';
+  box.innerHTML = h;
+
+  box.querySelectorAll('[data-dl]').forEach(function (btn) {
+    btn.onclick = function () {
+      dl(btn.getAttribute('data-dl'));
+    };
+  });
+}
+
+function renderUserTable() {
+  var box = document.getElementById('userTableBox');
+  if (!S.users.length) {
+    box.innerHTML = '<div class="empty-state">Belum ada data pengguna.</div>';
+    return;
+  }
+
+  var h = '<table class="gov-table"><thead><tr>' +
+    '<th>Nama Pengguna (Username)</th>' +
+    '<th>Nama Lengkap</th>' +
+    '<th>Role Akses</th>' +
+    '<th>Instansi Terkait</th>' +
+    '<th style="text-align:center;">Aksi</th>' +
+  '</tr></thead><tbody>';
+
+  S.users.forEach(function (x) {
+    h += '<tr>' +
+      '<td><span class="bold">' + esc(x.username) + '</span></td>' +
+      '<td>' + esc(x.nama || '-') + '</td>' +
+      '<td><span class="badge b-aktif">' + esc(x.role) + '</span></td>' +
+      '<td>' + esc(x.instansi_id || '-') + '</td>' +
+      '<td style="text-align:center;">' +
+        '<button class="btn sec sm" data-edit-usr="' + esc(x.username) + '">Ubah</button>' +
+      '</td>' +
+    '</tr>';
+  });
+
+  h += '</tbody></table>';
+  box.innerHTML = h;
+
+  box.querySelectorAll('[data-edit-usr]').forEach(function (btn) {
+    btn.onclick = function () {
+      var item = S.users.filter(function (x) { return x.username === btn.getAttribute('data-edit-usr'); })[0];
+      if (item) editUser(item);
+    };
+  });
+}
+
+// ---------------------------------------------------------------------------
+// FORM HANDLERS (MODALS)
+// ---------------------------------------------------------------------------
+
+function openKsModal() {
+  var f = document.getElementById('fKs');
+  f.reset();
+  f.id.value = '';
+  document.getElementById('ksTglSelesai').disabled = false;
+  document.getElementById('mKsTitle').textContent = 'Tambah Dokumen Kerja Sama';
+  openModal('mKsOverlay');
+}
+
+function editKs(k) {
+  var f = document.getElementById('fKs');
+  f.reset();
+  Object.keys(k).forEach(function (key) {
+    if (f[key]) f[key].value = k[key];
+  });
+  if (k.tanpa_batas) {
+    f.tanpa_batas.checked = true;
+    document.getElementById('ksTglSelesai').disabled = true;
+  } else {
+    f.tanpa_batas.checked = false;
+    document.getElementById('ksTglSelesai').disabled = false;
+  }
+  document.getElementById('mKsTitle').textContent = 'Ubah Dokumen: ' + k.nomor;
+  openModal('mKsOverlay');
+}
+
+document.getElementById('fKs').onsubmit = function (e) {
+  e.preventDefault();
+  var f = e.target, o = {};
+  ['id', 'nomor', 'jenis', 'instansi_id', 'judul', 'tgl_ttd', 'tgl_mulai', 'tgl_selesai', 'pic', 'file_ttd_id', 'file_ttd_nama'].forEach(function (k) {
+    o[k] = f[k] ? f[k].value : '';
+  });
+  o.tanpa_batas = f.tanpa_batas.checked;
+
+  api('save_kerjasama', { data: o }).then(function (r) {
+    if (!r.ok) {
+      showToast(r.error, 'error');
+    } else {
+      showToast('Data kerja sama berhasil disimpan.', 'info');
+      closeModal('mKsOverlay');
+      load('ks');
+    }
+  });
+};
+
+function openImplModal() {
+  var f = document.getElementById('fImpl');
+  f.reset();
+  f.id.value = '';
+  f.bukti_id.value = '';
+  f.bukti_nama.value = '';
+  document.getElementById('mImplTitle').textContent = 'Catat Implementasi Kegiatan';
+  openModal('mImplOverlay');
+}
+
+document.getElementById('fImpl').onsubmit = function (e) {
+  e.preventDefault();
+  var f = e.target;
+  var bBtn = document.getElementById('bSaveImpl');
+  bBtn.disabled = true;
+  bBtn.textContent = 'Menyimpan...';
+
+  var done = function (bid, bnm) {
+    var o = {
+      id: f.id.value,
+      kerjasama_id: f.kerjasama_id.value,
+      kegiatan: f.kegiatan.value,
+      tanggal: f.tanggal.value,
+      lokasi: f.lokasi.value,
+      hasil: f.hasil.value,
+      realisasi: f.realisasi.value,
+      bukti_id: bid,
+      bukti_nama: bnm
+    };
+    api('save_implementasi', { data: o }).then(function (r) {
+      bBtn.disabled = false;
+      bBtn.textContent = 'Simpan Realisasi';
+      if (!r.ok) {
+        showToast(r.error, 'error');
+      } else {
+        showToast('Implementasi berhasil dicatat.', 'info');
+        closeModal('mImplOverlay');
+        load('impl');
+      }
     });
-    document.getElementById('ksList').innerHTML = h + '</table>';
-    document.getElementById('ksList').querySelectorAll('[data-e]').forEach(function (b) {
-      b.onclick = function () { var k = S.ks.filter(function (x) { return x.id === b.getAttribute('data-e'); })[0]; var f = document.getElementById('fKs'); Object.keys(k).forEach(function (key) { if (f[key]) f[key].value = k[key]; }); if (k.tanpa_batas) f.tanpa_batas.checked = true; window.scrollTo(0, 0); };
+  };
+
+  var fl = document.getElementById('bukti').files[0];
+  if (!fl) {
+    done(f.bukti_id.value, f.bukti_nama.value);
+    return;
+  }
+
+  showToast('Mengunggah bukti ke Google Drive...', 'info');
+  file64(fl).then(function (b64) {
+    return api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
+      if (!r.ok) {
+        bBtn.disabled = false;
+        bBtn.textContent = 'Simpan Realisasi';
+        showToast('Gagal unggah: ' + r.error, 'error');
+      } else {
+        done(r.drive_id, r.nama);
+      }
     });
-    document.getElementById('ksList').querySelectorAll('[data-wa]').forEach(function (b) {
-      b.onclick = function () { var n = (b.getAttribute('data-wa') || '').replace(/\D/g, ''); if (!n) { alert('PIC belum ada nomor WA'); return; } open('https://wa.me/' + n + '?text=' + encodeURIComponent('Halo, terkait kerja sama dengan BBPOM Mataram yang hampir berakhir, mohon info tindak lanjut.')); };
+  }).catch(function (err) {
+    bBtn.disabled = false;
+    bBtn.textContent = 'Simpan Realisasi';
+    showToast('Gagal membaca berkas: ' + err, 'error');
+  });
+};
+
+function openInsModal() {
+  var f = document.getElementById('fIns');
+  f.reset();
+  f.id.value = '';
+  document.getElementById('mInsTitle').textContent = 'Tambah Instansi Mitra';
+  openModal('mInsOverlay');
+}
+
+function editIns(item) {
+  var f = document.getElementById('fIns');
+  f.reset();
+  f.id.value = item.id;
+  f.nama.value = item.nama;
+  f.jenis.value = item.jenis;
+  f.kontak.value = item.kontak || '';
+  document.getElementById('mInsTitle').textContent = 'Ubah Mitra: ' + item.nama;
+  openModal('mInsOverlay');
+}
+
+document.getElementById('fIns').onsubmit = function (e) {
+  e.preventDefault();
+  var f = e.target;
+  api('save_instansi', {
+    data: { id: f.id.value, nama: f.nama.value, jenis: f.jenis.value, kontak: f.kontak.value }
+  }).then(function (r) {
+    if (!r.ok) {
+      showToast(r.error, 'error');
+    } else {
+      showToast('Instansi mitra berhasil disimpan.', 'info');
+      closeModal('mInsOverlay');
+      load('ins');
+    }
+  });
+};
+
+function openDokModal() {
+  var f = document.getElementById('fDok');
+  f.reset();
+  document.getElementById('dokMsg').textContent = '';
+  openModal('mDokOverlay');
+}
+
+document.getElementById('fDok').onsubmit = function (e) {
+  e.preventDefault();
+  var f = e.target;
+  var fl = document.getElementById('dokFile').files[0];
+  if (!fl) {
+    showToast('Harap pilih berkas dokumen terlebih dahulu.', 'error');
+    return;
+  }
+
+  var msg = document.getElementById('dokMsg');
+  var bBtn = document.getElementById('bSaveDok');
+  bBtn.disabled = true;
+  msg.textContent = 'Mengunggah ke Drive...';
+
+  file64(fl).then(function (b64) {
+    api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
+      if (!r.ok) {
+        bBtn.disabled = false;
+        msg.textContent = 'Gagal upload: ' + r.error;
+        showToast(r.error, 'error');
+        return;
+      }
+      api('save_dokumen', {
+        data: {
+          kerjasama_id: f.kerjasama_id.value,
+          kategori: f.kategori.value,
+          nama_file: r.nama,
+          drive_id: r.drive_id
+        }
+      }).then(function (r2) {
+        bBtn.disabled = false;
+        if (!r2.ok) {
+          msg.textContent = r2.error;
+          showToast(r2.error, 'error');
+        } else {
+          showToast('Dokumen berhasil diunggah.', 'info');
+          closeModal('mDokOverlay');
+          load('dok');
+        }
+      });
     });
-    if (!can('ks_add') && S.me.role !== 'admin') document.getElementById('fKs').classList.add('hide');
+  }).catch(function (err) {
+    bBtn.disabled = false;
+    showToast('Gagal memproses berkas: ' + err, 'error');
   });
-  if (v === 'impl') api('list_implementasi', {}).then(function (r) {
-    if (!r.ok) return;
-    var h = '<table><tr><th>Tanggal</th><th>Kegiatan</th><th>Lokasi</th><th>Hasil</th><th>Bukti</th></tr>';
-    r.data.forEach(function (x) { h += '<tr><td>' + esc(x.tanggal) + '</td><td>' + esc(x.kegiatan) + '</td><td>' + esc(x.lokasi) + '</td><td>' + esc(x.hasil) + '</td><td>' + (x.bukti_id ? '<button class="btn" data-d="' + x.bukti_id + '">Unduh</button>' : '-') + '</td></tr>'; });
-    document.getElementById('implList').innerHTML = h + '</table>';
-    document.getElementById('implList').querySelectorAll('[data-d]').forEach(function (b) { b.onclick = function () { dl(b.getAttribute('data-d')); }; });
-    if (!can('impl_add')) document.getElementById('fImpl').classList.add('hide');
+};
+
+function openUserModal() {
+  var f = document.getElementById('fUser');
+  f.reset();
+  f.username.readOnly = false;
+  document.getElementById('mUserTitle').textContent = 'Tambah Pengguna';
+  openModal('mUserOverlay');
+}
+
+function editUser(item) {
+  var f = document.getElementById('fUser');
+  f.reset();
+  f.username.value = item.username;
+  f.username.readOnly = true;
+  f.password.value = '';
+  f.role.value = item.role;
+  f.nama.value = item.nama || '';
+  f.instansi_id.value = item.instansi_id || '';
+  document.getElementById('mUserTitle').textContent = 'Ubah Akun: ' + item.username;
+  openModal('mUserOverlay');
+}
+
+document.getElementById('fUser').onsubmit = function (e) {
+  e.preventDefault();
+  var f = e.target;
+  api('save_user', {
+    data: {
+      username: f.username.value.trim(),
+      password: f.password.value,
+      role: f.role.value,
+      instansi_id: f.instansi_id.value,
+      nama: f.nama.value
+    }
+  }).then(function (r) {
+    if (!r.ok) {
+      showToast(r.error, 'error');
+    } else {
+      showToast('Akun pengguna berhasil disimpan.', 'info');
+      closeModal('mUserOverlay');
+      load('users');
+    }
   });
-  if (v === 'ins') api('list_instansi').then(function (r) {
-    if (!r.ok) return; S.ins = r.data; opt('uIns', S.ins, 'id', 'nama');
-    var h = '<table><tr><th>Nama</th><th>Jenis</th><th>Kontak</th></tr>';
-    r.data.forEach(function (x) { h += '<tr><td>' + esc(x.nama) + '</td><td>' + esc(x.jenis) + '</td><td>' + esc(x.kontak) + '</td></tr>'; });
-    document.getElementById('insList').innerHTML = h + '</table>';
-    if (!can('ins') && S.me.role !== 'admin') document.getElementById('fIns').classList.add('hide');
-  });
-  if (v === 'dok') api('list_dokumen', {}).then(function (r) {
-    if (!r.ok) return;
-    var h = '<table><tr><th>Tanggal</th><th>Kategori</th><th>Nama file</th><th>Aksi</th></tr>';
-    r.data.forEach(function (x) { h += '<tr><td>' + esc(x.tanggal) + '</td><td>' + esc(x.kategori) + '</td><td>' + esc(x.nama_file) + '</td><td><button class="btn" data-d="' + x.drive_id + '">Unduh</button></td></tr>'; });
-    document.getElementById('dokList').innerHTML = h + '</table>';
-    document.getElementById('dokList').querySelectorAll('[data-d]').forEach(function (b) { b.onclick = function () { dl(b.getAttribute('data-d')); }; });
-  });
-  if (v === 'users') Promise.all([api('list_users'), api('list_instansi')]).then(function (rs) {
-    if (!rs[0].ok) { alert(rs[0].error); return; }
-    S.ins = rs[1].ok ? rs[1].data : []; opt('uIns', S.ins, 'id', 'nama');
-    var h = '<table><tr><th>Username</th><th>Nama</th><th>Role</th><th>Instansi</th></tr>';
-    rs[0].data.forEach(function (x) { h += '<tr><td>' + esc(x.username) + '</td><td>' + esc(x.nama) + '</td><td>' + esc(x.role) + '</td><td>' + esc(x.instansi_id) + '</td></tr>'; });
-    document.getElementById('userList').innerHTML = h + '</table>';
+};
+
+// ---------------------------------------------------------------------------
+// RETINA CANVAS CHARTS
+// ---------------------------------------------------------------------------
+
+function chartArea(id, obj, color) {
+  var c = document.getElementById(id);
+  if (!c) return;
+
+  var dpr = window.devicePixelRatio || 1;
+  var rect = c.getBoundingClientRect();
+  var w = rect.width || 480;
+  var h = 220;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  c.style.height = h + 'px';
+
+  var ctx = c.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+
+  var ks = Object.keys(obj || {}).sort();
+  if (!ks.length) {
+    ctx.fillStyle = '#64748b';
+    ctx.font = '13px var(--font-sans)';
+    ctx.textAlign = 'center';
+    ctx.fillText('Belum ada data grafik', w / 2, h / 2);
+    return;
+  }
+
+  var vs = ks.slice(-10);
+  var mx = Math.max.apply(null, vs.map(function (k) { return obj[k]; })) || 1;
+
+  var padL = 36;
+  var padR = 24;
+  var padB = 30;
+  var padT = 20;
+  var dw = w - padL - padR;
+  var dh = h - padB - padT;
+
+  var px = function (i) { return padL + i * (dw / (vs.length - 1 || 1)); };
+  var py = function (v) { return padT + dh - (v / mx) * dh; };
+
+  // Baseline
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(padL, padT + dh);
+  ctx.lineTo(w - padR, padT + dh);
+  ctx.stroke();
+
+  // Gradient area
+  var g = ctx.createLinearGradient(0, padT, 0, padT + dh);
+  g.addColorStop(0, color);
+  g.addColorStop(1, 'rgba(255, 255, 255, 0.04)');
+
+  ctx.beginPath();
+  ctx.moveTo(px(0), py(obj[vs[0]]));
+  for (var i = 1; i < vs.length; i++) {
+    var xc = (px(i - 1) + px(i)) / 2;
+    var yc = (py(obj[vs[i - 1]]) + py(obj[vs[i]])) / 2;
+    ctx.quadraticCurveTo(px(i - 1), py(obj[vs[i - 1]]), xc, yc);
+  }
+  ctx.lineTo(px(vs.length - 1), py(obj[vs[vs.length - 1]]));
+  ctx.lineTo(px(vs.length - 1), padT + dh);
+  ctx.lineTo(px(0), padT + dh);
+  ctx.closePath();
+
+  ctx.fillStyle = g;
+  ctx.globalAlpha = 0.25;
+  ctx.fill();
+  ctx.globalAlpha = 1;
+
+  // Line
+  ctx.beginPath();
+  ctx.moveTo(px(0), py(obj[vs[0]]));
+  for (var j = 1; j < vs.length; j++) {
+    var xa = (px(j - 1) + px(j)) / 2;
+    var ya = (py(obj[vs[j - 1]]) + py(obj[vs[j]])) / 2;
+    ctx.quadraticCurveTo(px(j - 1), py(obj[vs[j - 1]]), xa, ya);
+  }
+  ctx.lineTo(px(vs.length - 1), py(obj[vs[vs.length - 1]]));
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Dots & Text
+  vs.forEach(function (k, idx) {
+    var cx = px(idx);
+    var cy = py(obj[k]);
+    var val = obj[k];
+
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#0f172a';
+    ctx.font = '600 11px var(--font-sans)';
+    ctx.textAlign = 'center';
+    ctx.fillText(String(val), cx, cy - 7);
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '500 10px var(--font-sans)';
+    var labelText = k.length > 7 ? (k.slice(0, 6) + '..') : k;
+    ctx.fillText(labelText, cx, padT + dh + 16);
   });
 }
-function area(id, obj, color) {
-  var c = document.getElementById(id), x = c.getContext('2d'); x.clearRect(0, 0, c.width, c.height);
-  var ks = Object.keys(obj || {}).sort(); if (!ks.length) { x.fillStyle = '#54677c'; x.font = '14px -apple-system,Segoe UI,sans-serif'; x.fillText('Belum ada data', 20, 30); return; }
-  var vs = ks.slice(-12), mx = Math.max.apply(null, vs.map(function (k) { return obj[k]; })) || 1;
-  var px = function (i) { return 8 + i * ((c.width - 16) / (vs.length - 1 || 1)); };
-  var py = function (v) { return c.height - 24 - (v / mx) * (c.height - 60); };
-  var g = x.createLinearGradient(0, 0, 0, c.height);
-  g.addColorStop(0, color); g.addColorStop(1, 'rgba(255,255,255,.05)');
-  x.beginPath(); x.moveTo(px(0), py(obj[vs[0]]));
-  for (var i = 1; i < vs.length; i++) { var xc = (px(i - 1) + px(i)) / 2, yc = (py(obj[vs[i - 1]]) + py(obj[vs[i]])) / 2; x.quadraticCurveTo(px(i - 1), py(obj[vs[i - 1]]), xc, yc); }
-  x.lineTo(px(vs.length - 1), py(obj[vs[vs.length - 1]]));
-  x.lineTo(px(vs.length - 1), c.height - 20); x.lineTo(px(0), c.height - 20); x.closePath();
-  x.fillStyle = g; x.globalAlpha = .45; x.fill(); x.globalAlpha = 1;
-  x.beginPath(); x.moveTo(px(0), py(obj[vs[0]]));
-  for (var j = 1; j < vs.length; j++) { var xa = (px(j - 1) + px(j)) / 2, ya = (py(obj[vs[j - 1]]) + py(obj[vs[j]])) / 2; x.quadraticCurveTo(px(j - 1), py(obj[vs[j - 1]]), xa, ya); }
-  x.lineTo(px(vs.length - 1), py(obj[vs[vs.length - 1]]));
-  x.strokeStyle = color; x.lineWidth = 2.5; x.stroke();
-  x.fillStyle = '#0f2a43'; x.font = '700 12px -apple-system,Segoe UI,sans-serif';
-  vs.forEach(function (k, i) { if (i % 2 === 0) x.fillText(String(obj[k]), px(i) - 4, py(obj[k]) - 6); });
-}
+
+// ---------------------------------------------------------------------------
+// FILE DOWNLOAD & CSV IMPORT
+// ---------------------------------------------------------------------------
+
 function file64(f) {
   return new Promise(function (res, rej) {
     var r = new FileReader();
-    r.onload = function () { res(String(r.result)); }; r.onerror = rej; r.readAsDataURL(f);
+    r.onload = function () { res(String(r.result)); };
+    r.onerror = rej;
+    r.readAsDataURL(f);
   });
 }
+
 function dl(drive_id) {
+  showToast('Menyiapkan unduhan...', 'info');
   api('download', { drive_id: drive_id }).then(function (r) {
-    if (!r.ok) { alert(r.error); return; }
+    if (!r.ok) {
+      showToast(r.error || 'Gagal mengunduh', 'error');
+      return;
+    }
     var a = document.createElement('a');
-    a.href = 'data:' + r.mime + ';base64,' + r.base64; a.download = r.nama; a.click();
+    a.href = 'data:' + r.mime + ';base64,' + r.base64;
+    a.download = r.nama;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('Berkas ' + r.nama + ' berhasil diunduh.', 'info');
+  }).catch(function (err) {
+    showToast('Kesalahan unduh: ' + err, 'error');
   });
 }
+
 function csv(f) {
   return new Promise(function (res) {
     if (!f) return res([]);
     var r = new FileReader();
     r.onload = function () {
       var lines = String(r.result).replace(/^\uFEFF/, '').split(/\r?\n/).filter(function (x) { return x.trim(); });
+      if (!lines.length) return res([]);
       var h = lines.shift().split(',');
       res(lines.map(function (ln) {
         var o = {}, cells = ln.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
-        h.forEach(function (k, i) { o[k.trim()] = (cells[i] || '').replace(/^"|"$/g, '').trim(); });
+        h.forEach(function (k, i) {
+          o[k.trim()] = (cells[i] || '').replace(/^"|"$/g, '').trim();
+        });
         return o;
       }));
     };
     r.readAsText(f);
   });
 }
+
 document.getElementById('bImp').onclick = function () {
-  document.getElementById('impMsg').textContent = 'Mengirim...';
-  var files = [document.getElementById('cIns').files[0], document.getElementById('cKs').files[0], document.getElementById('cRl').files[0], document.getElementById('cIm').files[0]];
+  var msg = document.getElementById('impMsg');
+  msg.textContent = 'Memulai proses impor...';
+
+  var files = [
+    document.getElementById('cIns').files[0],
+    document.getElementById('cKs').files[0],
+    document.getElementById('cRl').files[0],
+    document.getElementById('cIm').files[0]
+  ];
   var keys = ['instansi', 'kerjasama', 'ruanglingkup', 'implementasi'];
-  var chain = Promise.resolve(), hasil = [];
+  var chain = Promise.resolve();
+  var hasil = [];
+
   files.forEach(function (f, i) {
     chain = chain.then(function () {
       return csv(f).then(function (rows) {
         if (!rows.length) return;
-        document.getElementById('impMsg').textContent = 'Kirim ' + keys[i] + ' (' + rows.length + ')...';
+        msg.textContent = 'Mengirim ' + keys[i] + ' (' + rows.length + ' baris)...';
         var body = { action: 'bulk_import', token: S.token };
         body[keys[i]] = rows;
-        return fetch(API_URL, { method: 'POST', body: JSON.stringify(body) }).then(function (r) { return r.json(); }).then(function (r2) {
-          hasil.push(keys[i] + ':' + (r2.ok ? JSON.stringify(r2.imported) : r2.error));
-          document.getElementById('impMsg').textContent = hasil.join(' | ');
-        });
+        return fetch(API_URL, { method: 'POST', body: JSON.stringify(body) })
+          .then(function (r) { return r.json(); })
+          .then(function (r2) {
+            hasil.push(keys[i] + ': ' + (r2.ok ? 'Sukses ' + JSON.stringify(r2.imported) : r2.error));
+            msg.textContent = hasil.join(' | ');
+          });
       });
     });
   });
-  chain.catch(function (e) { document.getElementById('impMsg').textContent = hasil.join(' | ') + ' Gagal: ' + e; });
-};
-document.getElementById('fKs').onsubmit = function (e) {
-  e.preventDefault(); var f = e.target, o = {};
-  ['id', 'nomor', 'jenis', 'instansi_id', 'judul', 'tgl_ttd', 'tgl_mulai', 'tgl_selesai', 'pic', 'file_ttd_id', 'file_ttd_nama'].forEach(function (k) { o[k] = f[k] ? f[k].value : ''; });
-  o.tanpa_batas = f.tanpa_batas.checked;
-  api('save_kerjasama', { data: o }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('ks'); } });
-};
-document.getElementById('ksReset').onclick = function () { document.getElementById('fKs').reset(); };
-document.getElementById('fImpl').onsubmit = function (e) {
-  e.preventDefault(); var f = e.target;
-  var done = function (bid, bnm) {
-    var o = { id: f.id.value, kerjasama_id: f.kerjasama_id.value, kegiatan: f.kegiatan.value, tanggal: f.tanggal.value, lokasi: f.lokasi.value, hasil: f.hasil.value, realisasi: f.realisasi.value, bukti_id: bid, bukti_nama: bnm };
-    api('save_implementasi', { data: o }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('impl'); } });
-  };
-  var fl = document.getElementById('bukti').files[0];
-  if (!fl) return done(f.bukti_id.value, f.bukti_nama.value);
-  file64(fl).then(function (b64) {
-    return api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
-      if (!r.ok) alert(r.error); else done(r.drive_id, r.nama);
-    });
+
+  chain.then(function () {
+    showToast('Impor CSV selesai.', 'info');
+  }).catch(function (e) {
+    msg.textContent = hasil.join(' | ') + ' Gagal: ' + e;
+    showToast('Gagal impor: ' + e, 'error');
   });
 };
-document.getElementById('fIns').onsubmit = function (e) {
-  e.preventDefault(); var f = e.target;
-  api('save_instansi', { data: { id: f.id.value, nama: f.nama.value, jenis: f.jenis.value, kontak: f.kontak.value } }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('ins'); } });
-};
-document.getElementById('fDok').onsubmit = function (e) {
-  e.preventDefault(); var f = e.target, fl = document.getElementById('dokFile').files[0];
-  if (!fl) { alert('Pilih file dulu'); return; }
-  document.getElementById('dokMsg').textContent = 'Mengunggah...';
-  file64(fl).then(function (b64) {
-    api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
-      if (!r.ok) { document.getElementById('dokMsg').textContent = r.error; return; }
-      api('save_dokumen', { data: { kerjasama_id: f.kerjasama_id.value, kategori: f.kategori.value, nama_file: r.nama, drive_id: r.drive_id } }).then(function (r2) {
-        document.getElementById('dokMsg').textContent = r2.ok ? 'Unggah sukses' : r2.error; load('dok');
-      });
-    });
+
+// Initialize session
+if (S.token) {
+  api('me').then(function (r) {
+    if (r.ok) {
+      S.me = r.me;
+      boot();
+    } else {
+      localStorage.removeItem('monev_t');
+      S.token = '';
+    }
+  }).catch(function () {
+    localStorage.removeItem('monev_t');
   });
-};
-document.getElementById('fUser').onsubmit = function (e) {
-  e.preventDefault(); var f = e.target;
-  api('save_user', { data: { username: f.username.value.trim(), password: f.password.value, role: f.role.value, instansi_id: f.instansi_id.value, nama: f.nama.value } }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('users'); } });
-};
-if (S.token) api('me').then(function (r) { if (r.ok) { S.me = r.me; boot(); } else localStorage.removeItem('monev_t'); });
+}
 </script>
 </body>
 </html>
