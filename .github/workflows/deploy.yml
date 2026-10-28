@@ -1,0 +1,25 @@
+name: Deploy FE ke Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+    paths: [index.html, .github/workflows/deploy.yml]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cek sintaks JS
+        run: |
+          python3 -c "import re; s=open('index.html',encoding='utf-8').read(); m=re.search(r'<script>(.*)</script>', s, re.S); open('/tmp/fe.js','w').write(m.group(1))"
+          node --check /tmp/fe.js
+      - run: mkdir -p dist && cp index.html dist/
+      - name: Deploy ke Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: monev-kerjasama
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

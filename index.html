@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monev Kerja Sama BBPOM Mataram</title>
+<style>
+:root{--bg:#f4f6f5;--card:#fff;--ink:#1a2b24;--mut:#5c6f67;--line:#dfe7e2;--pri:#0b6b4f;--warn:#b7791f;--bad:#b3362b;--info:#2456a6}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--pri);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+header b{font-size:16px}nav{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px}
+nav button,.btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px;color:var(--ink)}
+nav button.on,.btn.pri{background:var(--pri);color:#fff;border-color:var(--pri)}
+main{padding:0 16px 40px;max-width:1100px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.card .n{font-size:26px;font-weight:700}.card .l{font-size:12px;color:var(--mut)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#eaf1ed}input,select,textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:14px;background:#fff;color:var(--ink)}
+form.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin:12px 0;display:grid;gap:8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:700px){.row2,.row3{grid-template-columns:1fr}table{font-size:12px}}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;border:1px solid var(--line)}
+.b-aktif{background:#e6f4ec}.b-hampir_berakhir{background:#fdf3dd}.b-kedaluwarsa{background:#fbe4e1}.b-tanpa_batas{background:#e8eefb}
+.mut{color:var(--mut);font-size:12px}.err{color:var(--bad)}.hide{display:none!important}
+:focus-visible{outline:3px solid var(--info);outline-offset:2px}
+footer{padding:20px 16px;color:var(--mut);font-size:12px;text-align:center}
+#login{max-width:380px;margin:8vh auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+#login h1{font-size:18px;margin:0 0 4px}
+</style>
+</head>
+<body>
+<header><b>Monev Kerja Sama BBPOM Mataram</b><span id="who" class="mut" style="color:#fff"></span></header>
+
+<div id="login">
+<h1>Masuk aplikasi</h1>
+<p class="mut">Monitoring dan evaluasi MoU/PKS, masa berlaku, mitra, implementasi.</p>
+<div id="lerr" class="err" role="alert"></div>
+<label>Username<input id="u" autocomplete="username"></label>
+<label>Kata sandi<input id="p" type="password" autocomplete="current-password"></label>
+<button class="btn pri" id="bLogin" style="width:100%">Masuk</button>
+<p class="mut">Lupa kata sandi? <a id="reset" href="https://wa.me/6287871500533?text=Halo%20Admin%2C%20mohon%20reset%20kata%20sandi%20akun%20Monev%20Kerja%20Sama%20BBPOM%20Mataram%20saya.%20Username%3A%20" target="_blank" rel="noopener">Minta reset via WhatsApp</a></p>
+<p class="mut">Akun contoh: admin/admin123, ketua/ketua123, petugas/petugas123, uin/uin123</p>
+</div>
+
+<div id="app" class="hide">
+<nav id="nav" aria-label="Menu utama"></nav>
+<main>
+<section id="v-dash">
+<div class="grid" id="cards"></div>
+<div class="row2">
+<div class="card"><b>Per instansi</b><canvas id="c1" width="480" height="260" style="width:100%"></canvas></div>
+<div class="card"><b>Implementasi per bulan</b><canvas id="c2" width="480" height="260" style="width:100%"></canvas><p class="mut" id="h90"></p></div>
+</div>
+</section>
+<section id="v-ks" class="hide">
+<h2>Daftar MoU / PKS</h2>
+<form class="box" id="fKs">
+<div class="row3"><label>Nomor<input name="nomor" required></label><label>Jenis<select name="jenis"><option>MoU</option><option>PKS</option></select></label><label>Instansi<select name="instansi_id" id="ksIns"></select></label></div>
+<label>Judul / Tentang<input name="judul" required></label>
+<div class="row3"><label>Tgl TTD<input type="date" name="tgl_ttd"></label><label>Tgl mulai<input type="date" name="tgl_mulai"></label><label>Tgl selesai<input type="date" name="tgl_selesai"></label></div>
+<div class="row2"><label>PIC<input name="pic" placeholder="Nama / no WA"></label><label><br><input type="checkbox" name="tanpa_batas" style="width:auto"> Tanpa batas waktu</label></div>
+<input type="hidden" name="id"><input type="hidden" name="file_ttd_id"><input type="hidden" name="file_ttd_nama">
+<div><button class="btn pri">Simpan kerja sama</button> <button type="button" class="btn" id="ksReset">Bersihkan</button></div>
+</form>
+<div id="ksList"></div>
+</section>
+<section id="v-impl" class="hide">
+<h2>Implementasi</h2>
+<form class="box" id="fImpl">
+<div class="row2"><label>Kerja sama<select name="kerjasama_id" id="imKs"></select></label><label>Tanggal<input type="date" name="tanggal" required></label></div>
+<label>Kegiatan<input name="kegiatan" required></label>
+<div class="row3"><label>Lokasi<input name="lokasi"></label><label>Realisasi<input name="realisasi" placeholder="cth: 11.76"></label><label>Bukti (PDF/JPG/PNG, maks 10MB)<input type="file" id="bukti" accept=".pdf,.jpg,.jpeg,.png"></label></div>
+<label>Hasil<textarea name="hasil" rows="2"></textarea></label>
+<input type="hidden" name="id"><input type="hidden" name="bukti_id"><input type="hidden" name="bukti_nama">
+<div><button class="btn pri">Simpan implementasi</button></div>
+</form>
+<div id="implList"></div>
+</section>
+<section id="v-ins" class="hide"><h2>Instansi mitra</h2>
+<form class="box" id="fIns"><div class="row3"><label>Nama<input name="nama" required></label><label>Jenis<select name="jenis"><option>Pemda</option><option>Kampus</option><option>Profesi</option><option>Vertikal</option><option>Lainnya</option></select></label><label>Kontak<input name="kontak"></label></div><input type="hidden" name="id"><div><button class="btn pri">Simpan instansi</button></div></form>
+<div id="insList"></div></section>
+<section id="v-dok" class="hide"><h2>Dokumen pendukung</h2>
+<form class="box" id="fDok"><div class="row3"><label>Kerja sama<select name="kerjasama_id" id="dkKs"></select></label><label>Kategori<select name="kategori"><option value="draft">draft</option><option value="reviu">reviu</option><option value="kajian">kajian</option><option value="renaksi">rencana aksi</option><option value="surat">surat</option><option value="naskah_ttd">naskah ttd</option><option value="laporan_ttd">laporan ttd</option><option value="dokumentasi">dokumentasi</option><option value="monev">monev</option></select></label><label>File<input type="file" id="dokFile" accept=".pdf,.jpg,.jpeg,.png"></label></div><div><button class="btn pri">Unggah dokumen</button></div><p class="mut" id="dokMsg"></p></form>
+<div id="dokList"></div></section>
+<section id="v-users" class="hide"><h2>Pengguna</h2>
+<form class="box" id="fUser"><div class="row3"><label>Username<input name="username" required></label><label>Kata sandi baru<input name="password" placeholder="kosongkan bila tak ganti"></label><label>Role<select name="role"><option>admin</option><option>ketua</option><option>petugas</option><option>user</option></select></label></div><div class="row2"><label>Instansi (wajib utk role user)<select name="instansi_id" id="uIns"></select></label><label>Nama<input name="nama"></label></div><div><button class="btn pri">Simpan pengguna</button></div></form>
+<div id="userList"></div></section>
+</main>
+</div>
+<footer>draft tanpa arah desain, dial ENERGY 1 / RHYTHM 1 / MOTION 1. Data: Google Sheet + Drive via Apps Script.</footer>
+
+<script>
+var API_URL = 'https://script.google.com/macros/s/AKfycbzaC9pXqmaUot3YkyY6802rp9py77CNwuPrHaIVGYMYYlxHhu7SAVYd_RR6decdLg4k/exec';
+var S = { token: localStorage.getItem('monev_t') || '', me: null, ks: [], ins: [] };
+function api(action, extra) {
+  extra = extra || {}; extra.action = action; extra.token = S.token;
+  return fetch(API_URL, { method: 'POST', body: JSON.stringify(extra) }).then(function (r) { return r.json(); });
+}
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function can(a) {
+  var r = S.me && S.me.role;
+  if (r === 'admin') return true;
+  if (a === 'ks_add') return r === 'ketua';
+  if (a === 'impl_add') return r === 'petugas' || r === 'user';
+  if (a === 'impl_del') return r === 'petugas' || r === 'user';
+  if (a === 'ins') return r === 'ketua';
+  if (a === 'dok') return true;
+  return false;
+}
+document.getElementById('bLogin').onclick = function () {
+  document.getElementById('lerr').textContent = 'Menghubungi server...';
+  api('login', { username: document.getElementById('u').value.trim(), password: document.getElementById('p').value }).then(function (r) {
+    if (!r.ok) { document.getElementById('lerr').textContent = r.error || 'Login gagal.'; return; }
+    S.token = r.token; S.me = r.me; localStorage.setItem('monev_t', S.token); boot();
+  }).catch(function (e) { document.getElementById('lerr').textContent = 'Server tak terjangkau: ' + e; });
+};
+function boot() {
+  document.getElementById('login').classList.add('hide'); document.getElementById('app').classList.remove('hide');
+  document.getElementById('who').textContent = S.me.nama + ' (' + S.me.role + ')';
+  var items = [['dash', 'Dashboard'], ['ks', 'MoU/PKS'], ['impl', 'Implementasi'], ['ins', 'Instansi'], ['dok', 'Dokumen']];
+  if (S.me.role === 'admin') items.push(['users', 'Pengguna']);
+  var nav = document.getElementById('nav'); nav.innerHTML = '';
+  items.forEach(function (it, i) {
+    var b = document.createElement('button'); b.textContent = it[1]; if (i === 0) b.classList.add('on');
+    b.onclick = function () {
+      nav.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); }); b.classList.add('on');
+      ['dash', 'ks', 'impl', 'ins', 'dok', 'users'].forEach(function (v) { document.getElementById('v-' + v).classList.add('hide'); });
+      document.getElementById('v-' + it[0]).classList.remove('hide');
+      load(it[0]);
+    };
+    nav.appendChild(b);
+  });
+  var out = document.createElement('button'); out.textContent = 'Keluar'; out.style.marginLeft = 'auto';
+  out.onclick = function () { api('logout'); S.token = ''; localStorage.removeItem('monev_t'); location.reload(); };
+  nav.appendChild(out);
+  load('dash');
+}
+function opt(sel, list, vf, lf) {
+  var el = document.getElementById(sel); el.innerHTML = '';
+  list.forEach(function (x) { var o = document.createElement('option'); o.value = x[vf]; o.textContent = x[lf]; el.appendChild(o); });
+}
+function load(v) {
+  if (v === 'dash') api('dashboard').then(function (r) {
+    if (!r.ok) return;
+    var d = r.data, c = document.getElementById('cards');
+    function card(l, n) { return '<div class="card"><div class="n">' + n + '</div><div class="l">' + l + '</div></div>'; }
+    c.innerHTML = card('Total kerja sama', d.total_ks) + card('Aktif', d.status.aktif || 0) + card('Hampir berakhir H-90', d.status.hampir_berakhir || 0) + card('Kedaluwarsa', d.status.kedaluwarsa || 0) + card('Tanpa batas', d.status.tanpa_batas || 0) + card('Instansi', d.total_instansi) + card('Implementasi', d.total_impl);
+    bar('c1', d.per_instansi); bar('c2', d.per_bulan);
+  });
+  if (v === 'ks') Promise.all([api('list_kerjasama'), api('list_instansi')]).then(function (rs) {
+    if (!rs[0].ok) return; S.ks = rs[0].data; S.ins = rs[1].ok ? rs[1].data : [];
+    opt('ksIns', S.ins, 'id', 'nama'); opt('imKs', S.ks, 'id', 'judul'); opt('dkKs', S.ks, 'id', 'judul');
+    var h = '<table><tr><th>Nomor</th><th>Judul</th><th>Instansi</th><th>Berlaku</th><th>Status</th><th>Aksi</th></tr>';
+    S.ks.forEach(function (k) {
+      h += '<tr><td>' + esc(k.nomor) + '<br><span class="mut">' + esc(k.jenis) + '</span></td><td>' + esc(k.judul) + '<br><span class="mut">PIC: ' + esc(k.pic) + '</span></td><td>' + esc(k.instansi_nama) + '</td><td>' + esc(k.tgl_mulai) + ' s/d ' + esc(k.tgl_selesai || (k.tanpa_batas ? 'tanpa batas' : '')) + '</td><td><span class="badge b-' + k.status + '">' + k.status.replace(/_/g, ' ') + '</span></td><td><button class="btn" data-e="' + k.id + '">Ubah</button> <button class="btn" data-wa="' + esc(k.pic) + '">WA PIC</button></td></tr>';
+    });
+    document.getElementById('ksList').innerHTML = h + '</table>';
+    document.getElementById('ksList').querySelectorAll('[data-e]').forEach(function (b) {
+      b.onclick = function () { var k = S.ks.filter(function (x) { return x.id === b.getAttribute('data-e'); })[0]; var f = document.getElementById('fKs'); Object.keys(k).forEach(function (key) { if (f[key]) f[key].value = k[key]; }); if (k.tanpa_batas) f.tanpa_batas.checked = true; window.scrollTo(0, 0); };
+    });
+    document.getElementById('ksList').querySelectorAll('[data-wa]').forEach(function (b) {
+      b.onclick = function () { var n = (b.getAttribute('data-wa') || '').replace(/\D/g, ''); if (!n) { alert('PIC belum ada nomor WA'); return; } open('https://wa.me/' + n + '?text=' + encodeURIComponent('Halo, terkait kerja sama dengan BBPOM Mataram yang hampir berakhir, mohon info tindak lanjut.')); };
+    });
+    if (!can('ks_add') && S.me.role !== 'admin') document.getElementById('fKs').classList.add('hide');
+  });
+  if (v === 'impl') api('list_implementasi', {}).then(function (r) {
+    if (!r.ok) return;
+    var h = '<table><tr><th>Tanggal</th><th>Kegiatan</th><th>Lokasi</th><th>Hasil</th><th>Bukti</th></tr>';
+    r.data.forEach(function (x) { h += '<tr><td>' + esc(x.tanggal) + '</td><td>' + esc(x.kegiatan) + '</td><td>' + esc(x.lokasi) + '</td><td>' + esc(x.hasil) + '</td><td>' + (x.bukti_id ? '<button class="btn" data-d="' + x.bukti_id + '">Unduh</button>' : '-') + '</td></tr>'; });
+    document.getElementById('implList').innerHTML = h + '</table>';
+    document.getElementById('implList').querySelectorAll('[data-d]').forEach(function (b) { b.onclick = function () { dl(b.getAttribute('data-d')); }; });
+    if (!can('impl_add')) document.getElementById('fImpl').classList.add('hide');
+  });
+  if (v === 'ins') api('list_instansi').then(function (r) {
+    if (!r.ok) return; S.ins = r.data; opt('uIns', S.ins, 'id', 'nama');
+    var h = '<table><tr><th>Nama</th><th>Jenis</th><th>Kontak</th></tr>';
+    r.data.forEach(function (x) { h += '<tr><td>' + esc(x.nama) + '</td><td>' + esc(x.jenis) + '</td><td>' + esc(x.kontak) + '</td></tr>'; });
+    document.getElementById('insList').innerHTML = h + '</table>';
+    if (!can('ins') && S.me.role !== 'admin') document.getElementById('fIns').classList.add('hide');
+  });
+  if (v === 'dok') api('list_dokumen', {}).then(function (r) {
+    if (!r.ok) return;
+    var h = '<table><tr><th>Tanggal</th><th>Kategori</th><th>Nama file</th><th>Aksi</th></tr>';
+    r.data.forEach(function (x) { h += '<tr><td>' + esc(x.tanggal) + '</td><td>' + esc(x.kategori) + '</td><td>' + esc(x.nama_file) + '</td><td><button class="btn" data-d="' + x.drive_id + '">Unduh</button></td></tr>'; });
+    document.getElementById('dokList').innerHTML = h + '</table>';
+    document.getElementById('dokList').querySelectorAll('[data-d]').forEach(function (b) { b.onclick = function () { dl(b.getAttribute('data-d')); }; });
+  });
+  if (v === 'users') Promise.all([api('list_users'), api('list_instansi')]).then(function (rs) {
+    if (!rs[0].ok) { alert(rs[0].error); return; }
+    S.ins = rs[1].ok ? rs[1].data : []; opt('uIns', S.ins, 'id', 'nama');
+    var h = '<table><tr><th>Username</th><th>Nama</th><th>Role</th><th>Instansi</th></tr>';
+    rs[0].data.forEach(function (x) { h += '<tr><td>' + esc(x.username) + '</td><td>' + esc(x.nama) + '</td><td>' + esc(x.role) + '</td><td>' + esc(x.instansi_id) + '</td></tr>'; });
+    document.getElementById('userList').innerHTML = h + '</table>';
+  });
+}
+function bar(id, obj) {
+  var c = document.getElementById(id), x = c.getContext('2d'); x.clearRect(0, 0, c.width, c.height);
+  var ks = Object.keys(obj || {}); if (!ks.length) { x.fillStyle = '#5c6f67'; x.fillText('Belum ada data', 20, 30); return; }
+  var mx = Math.max.apply(null, ks.map(function (k) { return obj[k]; }));
+  var bw = c.width / ks.length;
+  ks.slice(0, 12).forEach(function (k, i) {
+    var h = (obj[k] / mx) * (c.height - 40);
+    x.fillStyle = '#0b6b4f'; x.fillRect(i * bw + 6, c.height - 20 - h, bw - 12, h);
+    x.fillStyle = '#1a2b24'; x.fillText(String(obj[k]), i * bw + 8, c.height - 24 - h);
+  });
+}
+function file64(f) {
+  return new Promise(function (res, rej) {
+    var r = new FileReader();
+    r.onload = function () { res(String(r.result)); }; r.onerror = rej; r.readAsDataURL(f);
+  });
+}
+function dl(drive_id) {
+  api('download', { drive_id: drive_id }).then(function (r) {
+    if (!r.ok) { alert(r.error); return; }
+    var a = document.createElement('a');
+    a.href = 'data:' + r.mime + ';base64,' + r.base64; a.download = r.nama; a.click();
+  });
+}
+document.getElementById('fKs').onsubmit = function (e) {
+  e.preventDefault(); var f = e.target, o = {};
+  ['id', 'nomor', 'jenis', 'instansi_id', 'judul', 'tgl_ttd', 'tgl_mulai', 'tgl_selesai', 'pic', 'file_ttd_id', 'file_ttd_nama'].forEach(function (k) { o[k] = f[k] ? f[k].value : ''; });
+  o.tanpa_batas = f.tanpa_batas.checked;
+  api('save_kerjasama', { data: o }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('ks'); } });
+};
+document.getElementById('ksReset').onclick = function () { document.getElementById('fKs').reset(); };
+document.getElementById('fImpl').onsubmit = function (e) {
+  e.preventDefault(); var f = e.target;
+  var done = function (bid, bnm) {
+    var o = { id: f.id.value, kerjasama_id: f.kerjasama_id.value, kegiatan: f.kegiatan.value, tanggal: f.tanggal.value, lokasi: f.lokasi.value, hasil: f.hasil.value, realisasi: f.realisasi.value, bukti_id: bid, bukti_nama: bnm };
+    api('save_implementasi', { data: o }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('impl'); } });
+  };
+  var fl = document.getElementById('bukti').files[0];
+  if (!fl) return done(f.bukti_id.value, f.bukti_nama.value);
+  file64(fl).then(function (b64) {
+    return api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
+      if (!r.ok) alert(r.error); else done(r.drive_id, r.nama);
+    });
+  });
+};
+document.getElementById('fIns').onsubmit = function (e) {
+  e.preventDefault(); var f = e.target;
+  api('save_instansi', { data: { id: f.id.value, nama: f.nama.value, jenis: f.jenis.value, kontak: f.kontak.value } }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('ins'); } });
+};
+document.getElementById('fDok').onsubmit = function (e) {
+  e.preventDefault(); var f = e.target, fl = document.getElementById('dokFile').files[0];
+  if (!fl) { alert('Pilih file dulu'); return; }
+  document.getElementById('dokMsg').textContent = 'Mengunggah...';
+  file64(fl).then(function (b64) {
+    api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
+      if (!r.ok) { document.getElementById('dokMsg').textContent = r.error; return; }
+      api('save_dokumen', { data: { kerjasama_id: f.kerjasama_id.value, kategori: f.kategori.value, nama_file: r.nama, drive_id: r.drive_id } }).then(function (r2) {
+        document.getElementById('dokMsg').textContent = r2.ok ? 'Unggah sukses' : r2.error; load('dok');
+      });
+    });
+  });
+};
+document.getElementById('fUser').onsubmit = function (e) {
+  e.preventDefault(); var f = e.target;
+  api('save_user', { data: { username: f.username.value.trim(), password: f.password.value, role: f.role.value, instansi_id: f.instansi_id.value, nama: f.nama.value } }).then(function (r) { if (!r.ok) alert(r.error); else { f.reset(); load('users'); } });
+};
+if (S.token) api('me').then(function (r) { if (r.ok) { S.me = r.me; boot(); } else localStorage.removeItem('monev_t'); });
+</script>
+</body>
+</html>
