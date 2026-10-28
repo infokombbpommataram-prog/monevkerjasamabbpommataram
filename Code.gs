@@ -155,8 +155,9 @@ function need_(me, roles) { if (roles.indexOf(me.role) < 0) throw new Error('Aks
 
 function statusKs_(k) {
   if (k.tanpa_batas === 'YA' || k.tanpa_batas === true) return 'tanpa_batas';
-  if (!k.tgl_selesai) return 'aktif';
-  var d = Math.ceil((new Date(k.tgl_selesai) - new Date()) / 864e5);
+  var s = iso_(k.tgl_selesai);
+  if (!s) return 'aktif';
+  var d = Math.ceil((new Date(s) - new Date()) / 864e5);
   if (d < 0) return 'kedaluwarsa';
   if (d <= 90) return 'hampir_berakhir';
   return 'aktif';
@@ -165,7 +166,7 @@ function ksList_(me) {
   var ins = {}; rows_('Instansi').forEach(function (x) { ins[x.id] = x.nama; });
   return rows_('Kerjasama')
     .filter(function (k) { return me.role !== 'user' || k.instansi_id === me.instansi_id; })
-    .map(function (k) { k.instansi_nama = ins[k.instansi_id] || k.instansi_id; k.status = statusKs_(k); return k; });
+    .map(function (k) { k.instansi_nama = ins[k.instansi_id] || k.instansi_id; k.tgl_mulai = iso_(k.tgl_mulai); k.tgl_selesai = iso_(k.tgl_selesai); k.tgl_ttd = iso_(k.tgl_ttd); k.status = statusKs_(k); return k; });
 }
 function implList_(me, b) {
   var ks = {}; rows_('Kerjasama').forEach(function (x) { ks[x.id] = x; });
@@ -173,10 +174,15 @@ function implList_(me, b) {
     var k = ks[x.kerjasama_id];
     if (!k) return false;
     if (b.kerjasama_id && x.kerjasama_id !== b.kerjasama_id) return false;
-    return me.role !== 'user' || k.instansi_id === me.instansi_id;
+    if (me.role !== 'user' || k.instansi_id === me.instansi_id) { x.tanggal = iso_(x.tanggal); return true; }
+    return false;
   });
 }
 
+function iso_(v) {
+  if (Object.prototype.toString.call(v) === '[object Date]') return Utilities.formatDate(v, 'Asia/Makassar', 'yyyy-MM-dd');
+  return String(v || '');
+}
 function dash_() {
   var ks = rows_('Kerjasama');
   var st = { aktif: 0, hampir_berakhir: 0, kedaluwarsa: 0, tanpa_batas: 0 };
@@ -186,7 +192,7 @@ function dash_() {
     perIns[k.instansi_id] = (perIns[k.instansi_id] || 0) + 1;
   });
   rows_('Implementasi').forEach(function (x) {
-    var m = String(x.tanggal || '').slice(0, 7);
+    var m = iso_(x.tanggal).slice(0, 7);
     if (m) perBulan[m] = (perBulan[m] || 0) + 1;
   });
   return { total_ks: ks.length, total_instansi: rows_('Instansi').length, total_impl: rows_('Implementasi').length, status: st, per_instansi: perIns, per_bulan: perBulan };
