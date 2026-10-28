@@ -5,35 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monev Kerja Sama BBPOM Mataram</title>
 <style>
-/* Reading: portal dinas untuk staf, visual Apple-clean, dial ENERGY 2 / RHYTHM 2 / MOTION 1.
-   Alasan: navy = otoritas dinas; green = status aktif/sehat; glass hanya nav+login+angka (R-10, 1-2 elemen). */
-:root{--bg:#eef2f1;--card:rgba(255,255,255,.82);--ink:#0f2a43;--mut:#54677c;--line:#d8e2dd;--green:#14532d;--navy:#1e3a5f;--warn:#8a5f17;--bad:#a83226;--info:#1e3a5f}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
-header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-header b{font-size:15px;letter-spacing:.2px}nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 20px;position:sticky;top:0;z-index:5;background:rgba(238,242,241,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-nav button,.btn{border:1px solid var(--line);background:rgba(255,255,255,.9);padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--ink)}
-nav button.on,.btn.pri{background:var(--green);color:#fff;border-color:var(--green)}
-main{padding:8px 20px 48px;max-width:1120px;margin:0 auto}
-h1{font-size:40px;line-height:1.05;letter-spacing:-.02em;margin:18px 0 6px}h2{font-size:22px;letter-spacing:-.01em;margin:18px 0 8px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:14px 0}
-.card{background:var(--card);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:14px;border-top:3px solid var(--green)}
-.card.plain{border-top:1px solid var(--line);backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}
-.card .n{font-size:34px;font-weight:800;color:var(--navy);letter-spacing:-.02em}.card .l{font-size:12px;color:var(--mut)}
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:18px;overflow:hidden;font-size:13px;border:1px solid var(--line)}
+/* Reading: portal dinas flowing-liquid, dial ENERGY 3 / RHYTHM 3 / MOTION 2.
+   Alasan: navy-to-green = otoritas ke status sehat; glass di lapisan atas saja (R-10); tabel putih jaga baca. */
+:root{--bg:#0f2a43;--ink:#0f2a43;--mut:#54677c;--line:rgba(15,42,67,.12);--green:#14532d;--green2:#1f7a44;--navy:#1e3a5f;--warn:#8a5f17;--bad:#a83226;--info:#1e3a5f}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:linear-gradient(135deg,#0f2a43 0%,#1e3a5f 34%,#14532d 78%,#1f7a44 100%) fixed;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(600px 320px at 12% -4%,rgba(255,255,255,.22),transparent 60%),radial-gradient(700px 380px at 88% 8%,rgba(255,255,255,.14),transparent 60%),radial-gradient(500px 500px at 50% 110%,rgba(31,122,68,.35),transparent 65%)}
+header{background:rgba(15,42,67,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.16)}
+header b{font-size:15px;letter-spacing:.2px}nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 20px;position:sticky;top:0;z-index:5;background:rgba(15,42,67,.45);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.14)}
+nav button,.btn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.14);color:#fff;padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14px}
+nav button.on,.btn.pri{background:linear-gradient(135deg,#1f7a44,#14532d);color:#fff;border-color:transparent}
+main{padding:8px 20px 48px;max-width:1120px;margin:0 auto;position:relative}
+h1{font-size:44px;line-height:1.02;letter-spacing:-.03em;margin:26px 0 6px}h2{font-size:22px;letter-spacing:-.01em;margin:18px 0 8px}
+main>.mut,main>p.mut{color:rgba(255,255,255,.75)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin:16px 0}
+.card{background:linear-gradient(150deg,rgba(255,255,255,.24),rgba(255,255,255,.08));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:16px;color:#fff;box-shadow:0 10px 34px rgba(0,0,0,.22)}
+.card .n{font-size:36px;font-weight:800;letter-spacing:-.02em}.card .l{font-size:12px;color:rgba(255,255,255,.8)}
+.card.g1{border-top:3px solid #7fe0a8}.card.g2{border-top:3px solid #9fc2ff}.card.g3{border-top:3px solid #ffd98a}.card.g4{border-top:3px solid #ff9d8a}
+table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.96);color:var(--ink);border-radius:18px;overflow:hidden;font-size:13px}
 th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
 th{background:#e9eff4;color:var(--navy);font-size:12px;letter-spacing:.04em}tr:hover td{background:#f5faf7}
+.card.plain{background:rgba(255,255,255,.94);color:var(--ink);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.5)}
 input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:14px;background:#fff;color:var(--ink)}
-form.box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;display:grid;gap:10px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-@media(max-width:700px){.row2,.row3{grid-template-columns:1fr}table{font-size:12px}h1{font-size:30px}}
+form.box{background:rgba(255,255,255,.94);color:var(--ink);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:14px;margin:12px 0;display:grid;gap:10px}
+form.box .mut{color:var(--mut)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:700px){.row2,.row3{grid-template-columns:1fr}table{font-size:12px}h1{font-size:32px}}
 .badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:11px;border:1px solid var(--line)}
 .b-aktif{background:#e2f1e6;color:var(--green)}.b-hampir_berakhir{background:#faf0d7;color:var(--warn)}.b-kedaluwarsa{background:#f9e2de;color:var(--bad)}.b-tanpa_batas{background:#e3ebf5;color:var(--navy)}
-.mut{color:var(--mut);font-size:12px}.err{color:var(--bad)}.hide{display:none!important}
-:focus-visible{outline:3px solid var(--info);outline-offset:2px}
-footer{padding:22px 16px;color:var(--mut);font-size:12px;text-align:center}
-.btn{transition:transform .15s ease,box-shadow .15s ease}.btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(15,42,67,.12)}
-#login{max-width:400px;margin:9vh auto;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 12px 40px rgba(15,42,67,.14)}
-#login h1{font-size:28px;margin:0 0 4px}
+.mut{color:var(--mut);font-size:12px}.err{color:#ffb4a8}.hide{display:none!important}
+:focus-visible{outline:3px solid #9fc2ff;outline-offset:2px}
+footer{padding:22px 16px;color:rgba(255,255,255,.65);font-size:12px;text-align:center}
+.btn{transition:transform .18s ease,box-shadow .18s ease}.btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+#login{max-width:400px;margin:9vh auto;background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,.1));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.35);border-radius:24px;padding:26px;box-shadow:0 18px 60px rgba(0,0,0,.3);color:#fff}
+#login .mut{color:rgba(255,255,255,.78)}#login h1{font-size:30px;margin:0 0 4px}
+#login input{background:rgba(255,255,255,.92)}
+#app .card .mut{color:rgba(255,255,255,.8)}
 </style>
 </head>
 <body>
@@ -159,9 +165,10 @@ function load(v) {
   if (v === 'dash') api('dashboard').then(function (r) {
     if (!r.ok) return;
     var d = r.data, c = document.getElementById('cards');
-    function card(l, n) { return '<div class="card"><div class="n">' + n + '</div><div class="l">' + l + '</div></div>'; }
-    c.innerHTML = card('Total kerja sama', d.total_ks) + card('Aktif', d.status.aktif || 0) + card('Hampir berakhir H-90', d.status.hampir_berakhir || 0) + card('Kedaluwarsa', d.status.kedaluwarsa || 0) + card('Tanpa batas', d.status.tanpa_batas || 0) + card('Instansi', d.total_instansi) + card('Implementasi', d.total_impl);
-    bar('c1', d.per_instansi, '#1e3a5f'); bar('c2', d.per_bulan, '#14532d');
+    function card(l, n, g) { return '<div class="card ' + g + '"><div class="n">' + n + '</div><div class="l">' + l + '</div></div>'; }
+    c.innerHTML = card('Total kerja sama', d.total_ks, 'g2') + card('Aktif', d.status.aktif || 0, 'g1') + card('Hampir berakhir H-90', d.status.hampir_berakhir || 0, 'g3') + card('Kedaluwarsa', d.status.kedaluwarsa || 0, 'g4') + card('Tanpa batas', d.status.tanpa_batas || 0, 'g2') + card('Instansi', d.total_instansi, 'g1') + card('Implementasi', d.total_impl, 'g1');
+    if (d.status.hampir_berakhir) document.getElementById('h90').textContent = d.status.hampir_berakhir + ' kerja sama perlu tindak lanjut perpanjangan.';
+    area('c1', d.per_instansi, '#9fc2ff'); area('c2', d.per_bulan, '#7fe0a8');
   });
   if (v === 'ks') Promise.all([api('list_kerjasama'), api('list_instansi')]).then(function (rs) {
     if (!rs[0].ok) return; S.ks = rs[0].data; S.ins = rs[1].ok ? rs[1].data : [];
@@ -209,19 +216,25 @@ function load(v) {
     document.getElementById('userList').innerHTML = h + '</table>';
   });
 }
-function bar(id, obj, color) {
+function area(id, obj, color) {
   var c = document.getElementById(id), x = c.getContext('2d'); x.clearRect(0, 0, c.width, c.height);
-  var ks = Object.keys(obj || {}); if (!ks.length) { x.fillStyle = '#54677c'; x.font = '14px -apple-system,Segoe UI,sans-serif'; x.fillText('Belum ada data', 20, 30); return; }
-  var mx = Math.max.apply(null, ks.map(function (k) { return obj[k]; }));
-  var bw = c.width / ks.length;
-  ks.slice(0, 12).forEach(function (k, i) {
-    var h = (obj[k] / mx) * (c.height - 56);
-    x.fillStyle = color || '#14532d';
-    x.beginPath();
-    if (x.roundRect) x.roundRect(i * bw + 8, c.height - 24 - h, bw - 16, h, 6); else x.rect(i * bw + 8, c.height - 24 - h, bw - 16, h);
-    x.fill();
-    x.fillStyle = '#0f2a43'; x.font = '700 12px -apple-system,Segoe UI,sans-serif'; x.fillText(String(obj[k]), i * bw + 10, c.height - 28 - h);
-  });
+  var ks = Object.keys(obj || {}).sort(); if (!ks.length) { x.fillStyle = '#54677c'; x.font = '14px -apple-system,Segoe UI,sans-serif'; x.fillText('Belum ada data', 20, 30); return; }
+  var vs = ks.slice(-12), mx = Math.max.apply(null, vs.map(function (k) { return obj[k]; })) || 1;
+  var px = function (i) { return 8 + i * ((c.width - 16) / (vs.length - 1 || 1)); };
+  var py = function (v) { return c.height - 24 - (v / mx) * (c.height - 60); };
+  var g = x.createLinearGradient(0, 0, 0, c.height);
+  g.addColorStop(0, color); g.addColorStop(1, 'rgba(255,255,255,.05)');
+  x.beginPath(); x.moveTo(px(0), py(obj[vs[0]]));
+  for (var i = 1; i < vs.length; i++) { var xc = (px(i - 1) + px(i)) / 2, yc = (py(obj[vs[i - 1]]) + py(obj[vs[i]])) / 2; x.quadraticCurveTo(px(i - 1), py(obj[vs[i - 1]]), xc, yc); }
+  x.lineTo(px(vs.length - 1), py(obj[vs[vs.length - 1]]));
+  x.lineTo(px(vs.length - 1), c.height - 20); x.lineTo(px(0), c.height - 20); x.closePath();
+  x.fillStyle = g; x.globalAlpha = .45; x.fill(); x.globalAlpha = 1;
+  x.beginPath(); x.moveTo(px(0), py(obj[vs[0]]));
+  for (var j = 1; j < vs.length; j++) { var xa = (px(j - 1) + px(j)) / 2, ya = (py(obj[vs[j - 1]]) + py(obj[vs[j]])) / 2; x.quadraticCurveTo(px(j - 1), py(obj[vs[j - 1]]), xa, ya); }
+  x.lineTo(px(vs.length - 1), py(obj[vs[vs.length - 1]]));
+  x.strokeStyle = color; x.lineWidth = 2.5; x.stroke();
+  x.fillStyle = '#0f2a43'; x.font = '700 12px -apple-system,Segoe UI,sans-serif';
+  vs.forEach(function (k, i) { if (i % 2 === 0) x.fillText(String(obj[k]), px(i) - 4, py(obj[k]) - 6); });
 }
 function file64(f) {
   return new Promise(function (res, rej) {
