@@ -717,6 +717,11 @@ table.gov-table tbody tr:last-child td {
 .modal-overlay.open .modal-card {
   transform: translateY(0);
 }
+#busyOverlay{position:fixed;inset:0;z-index:200;background:rgba(15,42,67,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s ease}
+#busyOverlay.open{opacity:1;pointer-events:auto}
+.busy-card{background:rgba(255,255,255,.95);border-radius:18px;padding:22px 30px;display:flex;align-items:center;gap:14px;font-size:14px;color:#0f2a43;box-shadow:0 18px 60px rgba(0,0,0,.3)}
+.busy-spin{width:26px;height:26px;border-radius:50%;border:3px solid #d8e2dd;border-top-color:#14532d;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 .modal-header {
   padding: 18px 24px;
   border-bottom: 1px solid var(--border-light);
@@ -1563,6 +1568,14 @@ input[type="checkbox"] {
 <!-- Toast Container -->
 <div id="toast-box"></div>
 
+<!-- Loading global: blur + pesan tengah -->
+<div id="busyOverlay" role="status" aria-live="polite">
+  <div class="busy-card">
+    <div class="busy-spin"></div>
+    <div id="busyText">Sedang memproses... mohon ditunggu...</div>
+  </div>
+</div>
+
 <!-- ========================================================================= -->
 <!-- JAVASCRIPT APPLICATION CORE                                               -->
 <!-- ========================================================================= -->
@@ -1584,12 +1597,35 @@ function api(action, extra) {
   extra = extra || {};
   extra.action = action;
   extra.token = S.token;
+  busy('Sedang memuat data... mohon ditunggu...');
   return fetch(API_URL, {
     method: 'POST',
     body: JSON.stringify(extra)
   }).then(function (r) {
     return r.json();
+  }).then(function (j) {
+    free();
+    return j;
+  }).catch(function (e) {
+    free();
+    throw e;
   });
+}
+
+var BUSY_N = 0;
+function busy(msg) {
+  BUSY_N++;
+  var o = document.getElementById('busyOverlay');
+  if (!o) return;
+  document.getElementById('busyText').textContent = msg || 'Sedang memproses... mohon ditunggu...';
+  o.classList.add('open');
+}
+function free() {
+  BUSY_N = Math.max(0, BUSY_N - 1);
+  if (!BUSY_N) {
+    var o = document.getElementById('busyOverlay');
+    if (o) o.classList.remove('open');
+  }
 }
 
 function esc(s) {
@@ -2028,7 +2064,7 @@ function renderKsTable() {
   box.querySelectorAll('[data-del-ks]').forEach(function (btn) {
     btn.onclick = function () {
       if (!confirm('Hapus MoU/PKS ini beserta ruang lingkupnya?')) return;
-      api('del_kerjasama', { id: btn.getAttribute('data-del-ks') }).then(function (r) {
+      busy('Sedang menghapus MoU/PKS... mohon ditunggu...');api('del_kerjasama', { id: btn.getAttribute('data-del-ks') }).then(function (r) {
         if (!r.ok) showToast(r.error, 'error'); else { showToast('MoU/PKS dihapus.', 'info'); load('ks'); }
       });
     };
@@ -2128,7 +2164,7 @@ function renderImplTable() {
   box.querySelectorAll('[data-del-impl]').forEach(function (btn) {
     btn.onclick = function () {
       if (!confirm('Hapus catatan implementasi ini?')) return;
-      api('del_implementasi', { id: btn.getAttribute('data-del-impl') }).then(function (r) {
+      busy('Sedang menghapus implementasi... mohon ditunggu...');api('del_implementasi', { id: btn.getAttribute('data-del-impl') }).then(function (r) {
         if (!r.ok) showToast(r.error, 'error'); else { showToast('Catatan dihapus.', 'info'); load('impl'); }
       });
     };
@@ -2185,7 +2221,7 @@ function renderInsTable() {
   box.querySelectorAll('[data-del-ins]').forEach(function (btn) {
     btn.onclick = function () {
       if (!confirm('Hapus instansi ini? Kerja sama terkait ikut tak tampil.')) return;
-      api('del_instansi', { id: btn.getAttribute('data-del-ins') }).then(function (r) {
+      busy('Sedang menghapus instansi... mohon ditunggu...');api('del_instansi', { id: btn.getAttribute('data-del-ins') }).then(function (r) {
         if (!r.ok) showToast(r.error, 'error'); else { showToast('Instansi dihapus.', 'info'); load('ins'); }
       });
     };
@@ -2312,7 +2348,7 @@ document.getElementById('fKs').onsubmit = function (e) {
   o.tanpa_batas = f.tanpa_batas.checked;
   var fl = document.getElementById('ksFile').files[0];
   var save = function () {
-    api('save_kerjasama', { data: o }).then(function (r) {
+    busy('Sedang menyimpan MoU/PKS... mohon ditunggu...');api('save_kerjasama', { data: o }).then(function (r) {
       if (!r.ok) {
         showToast(r.error, 'error');
       } else {
@@ -2326,7 +2362,7 @@ document.getElementById('fKs').onsubmit = function (e) {
   if (!/\.pdf$/i.test(fl.name)) { showToast('Naskah MoU/PKS harus .pdf', 'error'); return; }
   showToast('Mengunggah naskah PDF...', 'info');
   file64(fl).then(function (b64) {
-    return api('upload', { nama: fl.name, mime: 'application/pdf', base64: b64 }).then(function (r) {
+    return busy('Sedang mengunggah berkas... mohon ditunggu...');api('upload', { nama: fl.name, mime: 'application/pdf', base64: b64 }).then(function (r) {
       if (!r.ok) { showToast('Gagal unggah naskah: ' + r.error, 'error'); return; }
       o.file_ttd_id = r.drive_id; o.file_ttd_nama = r.nama;
       save();
@@ -2386,7 +2422,7 @@ document.getElementById('fImpl').onsubmit = function (e) {
       bukti_id: bid,
       bukti_nama: bnm
     };
-    api('save_implementasi', { data: o }).then(function (r) {
+    busy('Sedang menyimpan implementasi... mohon ditunggu...');api('save_implementasi', { data: o }).then(function (r) {
       bBtn.disabled = false;
       bBtn.textContent = 'Simpan Realisasi';
       if (!r.ok) {
@@ -2407,7 +2443,7 @@ document.getElementById('fImpl').onsubmit = function (e) {
 
   showToast('Mengunggah bukti ke Google Drive...', 'info');
   file64(fl).then(function (b64) {
-    return api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
+    return busy('Sedang mengunggah berkas... mohon ditunggu...');api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
       if (!r.ok) {
         bBtn.disabled = false;
         bBtn.textContent = 'Simpan Realisasi';
@@ -2445,7 +2481,7 @@ function editIns(item) {
 document.getElementById('fIns').onsubmit = function (e) {
   e.preventDefault();
   var f = e.target;
-  api('save_instansi', {
+  busy('Sedang menyimpan instansi... mohon ditunggu...');api('save_instansi', {
     data: { id: f.id.value, nama: f.nama.value, jenis: f.jenis.value, kontak: f.kontak.value }
   }).then(function (r) {
     if (!r.ok) {
@@ -2480,14 +2516,14 @@ document.getElementById('fDok').onsubmit = function (e) {
   msg.textContent = 'Mengunggah ke Drive...';
 
   file64(fl).then(function (b64) {
-    api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
+    busy('Sedang mengunggah berkas... mohon ditunggu...');api('upload', { nama: fl.name, mime: fl.type, base64: b64 }).then(function (r) {
       if (!r.ok) {
         bBtn.disabled = false;
         msg.textContent = 'Gagal upload: ' + r.error;
         showToast(r.error, 'error');
         return;
       }
-      api('save_dokumen', {
+      busy('Sedang menyimpan dokumen... mohon ditunggu...');api('save_dokumen', {
         data: {
           kerjasama_id: f.kerjasama_id.value,
           kategori: f.kategori.value,
@@ -2536,7 +2572,7 @@ function editUser(item) {
 document.getElementById('fUser').onsubmit = function (e) {
   e.preventDefault();
   var f = e.target;
-  api('save_user', {
+  busy('Sedang menyimpan pengguna... mohon ditunggu...');api('save_user', {
     data: {
       username: f.username.value.trim(),
       password: f.password.value,
@@ -2681,7 +2717,7 @@ function file64(f) {
 
 function dl(drive_id) {
   showToast('Menyiapkan unduhan...', 'info');
-  api('download', { drive_id: drive_id }).then(function (r) {
+  busy('Sedang mengunduh berkas... mohon ditunggu...');api('download', { drive_id: drive_id }).then(function (r) {
     if (!r.ok) {
       showToast(r.error || 'Gagal mengunduh', 'error');
       return;
