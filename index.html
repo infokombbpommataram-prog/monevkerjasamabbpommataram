@@ -5,29 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monev Kerja Sama BBPOM Mataram</title>
 <style>
-:root{--bg:#f4f6f5;--card:#fff;--ink:#1a2b24;--mut:#5c6f67;--line:#dfe7e2;--pri:#0b6b4f;--warn:#b7791f;--bad:#b3362b;--info:#2456a6}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:var(--pri);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-header b{font-size:16px}nav{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px}
-nav button,.btn{border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px;color:var(--ink)}
-nav button.on,.btn.pri{background:var(--pri);color:#fff;border-color:var(--pri)}
-main{padding:0 16px 40px;max-width:1100px;margin:0 auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
-.card .n{font-size:26px;font-weight:700}.card .l{font-size:12px;color:var(--mut)}
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;font-size:13px}
-th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
-th{background:#eaf1ed}input,select,textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font-size:14px;background:#fff;color:var(--ink)}
-form.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin:12px 0;display:grid;gap:8px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-@media(max-width:700px){.row2,.row3{grid-template-columns:1fr}table{font-size:12px}}
-.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;border:1px solid var(--line)}
-.b-aktif{background:#e6f4ec}.b-hampir_berakhir{background:#fdf3dd}.b-kedaluwarsa{background:#fbe4e1}.b-tanpa_batas{background:#e8eefb}
+/* Reading: portal dinas untuk staf, visual Apple-clean, dial ENERGY 2 / RHYTHM 2 / MOTION 1.
+   Alasan: navy = otoritas dinas; green = status aktif/sehat; glass hanya nav+login+angka (R-10, 1-2 elemen). */
+:root{--bg:#eef2f1;--card:rgba(255,255,255,.82);--ink:#0f2a43;--mut:#54677c;--line:#d8e2dd;--green:#14532d;--navy:#1e3a5f;--warn:#8a5f17;--bad:#a83226;--info:#1e3a5f}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+header b{font-size:15px;letter-spacing:.2px}nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 20px;position:sticky;top:0;z-index:5;background:rgba(238,242,241,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav button,.btn{border:1px solid var(--line);background:rgba(255,255,255,.9);padding:9px 18px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--ink)}
+nav button.on,.btn.pri{background:var(--green);color:#fff;border-color:var(--green)}
+main{padding:8px 20px 48px;max-width:1120px;margin:0 auto}
+h1{font-size:40px;line-height:1.05;letter-spacing:-.02em;margin:18px 0 6px}h2{font-size:22px;letter-spacing:-.01em;margin:18px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:14px 0}
+.card{background:var(--card);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:14px;border-top:3px solid var(--green)}
+.card.plain{border-top:1px solid var(--line);backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}
+.card .n{font-size:34px;font-weight:800;color:var(--navy);letter-spacing:-.02em}.card .l{font-size:12px;color:var(--mut)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:18px;overflow:hidden;font-size:13px;border:1px solid var(--line)}
+th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+th{background:#e9eff4;color:var(--navy);font-size:12px;letter-spacing:.04em}tr:hover td{background:#f5faf7}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:14px;background:#fff;color:var(--ink)}
+form.box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;display:grid;gap:10px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:700px){.row2,.row3{grid-template-columns:1fr}table{font-size:12px}h1{font-size:30px}}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:11px;border:1px solid var(--line)}
+.b-aktif{background:#e2f1e6;color:var(--green)}.b-hampir_berakhir{background:#faf0d7;color:var(--warn)}.b-kedaluwarsa{background:#f9e2de;color:var(--bad)}.b-tanpa_batas{background:#e3ebf5;color:var(--navy)}
 .mut{color:var(--mut);font-size:12px}.err{color:var(--bad)}.hide{display:none!important}
 :focus-visible{outline:3px solid var(--info);outline-offset:2px}
-footer{padding:20px 16px;color:var(--mut);font-size:12px;text-align:center}
-#login{max-width:380px;margin:8vh auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
-#login h1{font-size:18px;margin:0 0 4px}
+footer{padding:22px 16px;color:var(--mut);font-size:12px;text-align:center}
+.btn{transition:transform .15s ease,box-shadow .15s ease}.btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(15,42,67,.12)}
+#login{max-width:400px;margin:9vh auto;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 12px 40px rgba(15,42,67,.14)}
+#login h1{font-size:28px;margin:0 0 4px}
 </style>
 </head>
 <body>
@@ -48,10 +54,12 @@ footer{padding:20px 16px;color:var(--mut);font-size:12px;text-align:center}
 <nav id="nav" aria-label="Menu utama"></nav>
 <main>
 <section id="v-dash">
+<h1>Kerja sama dalam satu pandangan.</h1>
+<p class="mut">Status MoU/PKS, masa berlaku, dan capaian implementasi BBPOM Mataram.</p>
 <div class="grid" id="cards"></div>
 <div class="row2">
-<div class="card"><b>Per instansi</b><canvas id="c1" width="480" height="260" style="width:100%"></canvas></div>
-<div class="card"><b>Implementasi per bulan</b><canvas id="c2" width="480" height="260" style="width:100%"></canvas><p class="mut" id="h90"></p></div>
+<div class="card plain"><b>Per instansi</b><canvas id="c1" width="480" height="260" style="width:100%"></canvas></div>
+<div class="card plain"><b>Implementasi per bulan</b><canvas id="c2" width="480" height="260" style="width:100%"></canvas><p class="mut" id="h90"></p></div>
 </div>
 </section>
 <section id="v-ks" class="hide">
@@ -95,7 +103,7 @@ footer{padding:20px 16px;color:var(--mut);font-size:12px;text-align:center}
 <div><button class="btn pri" id="bImp">Kirim impor</button> <span class="mut" id="impMsg"></span></div></div></section>
 </main>
 </div>
-<footer>draft tanpa arah desain, dial ENERGY 1 / RHYTHM 1 / MOTION 1. Data: Google Sheet + Drive via Apps Script.</footer>
+<footer>Gaya: DESIGN.md dial ENERGY 2 / RHYTHM 2 / MOTION 1. Data: Google Sheet + Drive via Apps Script.</footer>
 
 <script>
 var API_URL = 'https://script.google.com/macros/s/AKfycbzaC9pXqmaUot3YkyY6802rp9py77CNwuPrHaIVGYMYYlxHhu7SAVYd_RR6decdLg4k/exec';
@@ -153,7 +161,7 @@ function load(v) {
     var d = r.data, c = document.getElementById('cards');
     function card(l, n) { return '<div class="card"><div class="n">' + n + '</div><div class="l">' + l + '</div></div>'; }
     c.innerHTML = card('Total kerja sama', d.total_ks) + card('Aktif', d.status.aktif || 0) + card('Hampir berakhir H-90', d.status.hampir_berakhir || 0) + card('Kedaluwarsa', d.status.kedaluwarsa || 0) + card('Tanpa batas', d.status.tanpa_batas || 0) + card('Instansi', d.total_instansi) + card('Implementasi', d.total_impl);
-    bar('c1', d.per_instansi); bar('c2', d.per_bulan);
+    bar('c1', d.per_instansi, '#1e3a5f'); bar('c2', d.per_bulan, '#14532d');
   });
   if (v === 'ks') Promise.all([api('list_kerjasama'), api('list_instansi')]).then(function (rs) {
     if (!rs[0].ok) return; S.ks = rs[0].data; S.ins = rs[1].ok ? rs[1].data : [];
@@ -201,15 +209,18 @@ function load(v) {
     document.getElementById('userList').innerHTML = h + '</table>';
   });
 }
-function bar(id, obj) {
+function bar(id, obj, color) {
   var c = document.getElementById(id), x = c.getContext('2d'); x.clearRect(0, 0, c.width, c.height);
-  var ks = Object.keys(obj || {}); if (!ks.length) { x.fillStyle = '#5c6f67'; x.fillText('Belum ada data', 20, 30); return; }
+  var ks = Object.keys(obj || {}); if (!ks.length) { x.fillStyle = '#54677c'; x.font = '14px -apple-system,Segoe UI,sans-serif'; x.fillText('Belum ada data', 20, 30); return; }
   var mx = Math.max.apply(null, ks.map(function (k) { return obj[k]; }));
   var bw = c.width / ks.length;
   ks.slice(0, 12).forEach(function (k, i) {
-    var h = (obj[k] / mx) * (c.height - 40);
-    x.fillStyle = '#0b6b4f'; x.fillRect(i * bw + 6, c.height - 20 - h, bw - 12, h);
-    x.fillStyle = '#1a2b24'; x.fillText(String(obj[k]), i * bw + 8, c.height - 24 - h);
+    var h = (obj[k] / mx) * (c.height - 56);
+    x.fillStyle = color || '#14532d';
+    x.beginPath();
+    if (x.roundRect) x.roundRect(i * bw + 8, c.height - 24 - h, bw - 16, h, 6); else x.rect(i * bw + 8, c.height - 24 - h, bw - 16, h);
+    x.fill();
+    x.fillStyle = '#0f2a43'; x.font = '700 12px -apple-system,Segoe UI,sans-serif'; x.fillText(String(obj[k]), i * bw + 10, c.height - 28 - h);
   });
 }
 function file64(f) {
