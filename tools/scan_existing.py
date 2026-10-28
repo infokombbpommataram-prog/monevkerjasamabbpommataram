@@ -123,12 +123,14 @@ for f in sorted(glob.glob(BASE + r'\Monev 2025\Matriks Monev*.xlsx')):
             target, real = bersih(r[6]), bersih(r[7])
             if not keg or keg.lower().startswith('kegiatan'): continue
             ks = next((k for k in kerjasama if bersih(judul)[:20] and k['judul'][:20] == bersih(judul)[:20]), None)
-            kunci = (ks['id'] if ks else '', keg[:60])
+            if not ks: continue
+            kunci = (ks['id'], keg[:60])
             if any(x.get('kunci') == kunci for x in impl): continue
+            bulan = {'1': '03-31', '2': '06-30', '3': '09-30'}.get(tri, '12-31')
             impl.append({'id': 'IM-%04d' % (len(impl) + 1),
-                         'kerjasama_id': ks['id'] if ks else '',
+                         'kerjasama_id': ks['id'],
                          'kegiatan': '%s [TW%s]' % (keg, tri),
-                         'tanggal': '2025-%02d-01' % (int(tri) * 3),
+                         'tanggal': '2025-%s' % bulan,
                          'lokasi': '', 'hasil': 'Mitra: %s' % mitra,
                          'realisasi': real, 'mitra_teks': mitra, 'kunci': kunci})
 
