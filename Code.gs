@@ -12,7 +12,7 @@ var HEADERS = {
   Kerjasama: ['id','nomor','judul','jenis','instansi_id','tgl_ttd','tgl_mulai','tgl_selesai','tanpa_batas','pic','file_ttd_id','file_ttd_nama'],
   RuangLingkup: ['id','kerjasama_id','ruang_lingkup','rencana_kegiatan','indikator','target_outcome'],
   Dokumen: ['id','kerjasama_id','kategori','nama_file','drive_id','tanggal'],
-  Implementasi: ['id','kerjasama_id','kegiatan','tanggal','lokasi','hasil','realisasi','bukti_id','bukti_nama','dibuat_oleh'],
+  Implementasi: ['id','kerjasama_id','kegiatan','tanggal','lokasi','hasil','evaluasi','realisasi','bukti_id','bukti_nama','dibuat_oleh'],
   Sessions: ['token','username','expired_at']
 };
 var ROLES = ['admin','ketua','petugas','user'];
@@ -234,7 +234,7 @@ function saveImpl_(me, b) {
   if (me.role === 'ketua') throw new Error('Ketua hanya pantau.');
   if (me.role === 'user' && k.instansi_id !== me.instansi_id) throw new Error('Hanya instansi asal.');
   o.id = o.id || uid_('IM');
-  saveRow_('Implementasi', { id: o.id, kerjasama_id: o.kerjasama_id, kegiatan: o.kegiatan, tanggal: o.tanggal, lokasi: o.lokasi || '', hasil: o.hasil || '', realisasi: o.realisasi || '', bukti_id: o.bukti_id || '', bukti_nama: o.bukti_nama || '', dibuat_oleh: me.username }, 'id');
+  saveRow_('Implementasi', { id: o.id, kerjasama_id: o.kerjasama_id, kegiatan: o.kegiatan, tanggal: o.tanggal, lokasi: o.lokasi || '', hasil: o.hasil || '', evaluasi: o.evaluasi || '', realisasi: o.realisasi || '', bukti_id: o.bukti_id || '', bukti_nama: o.bukti_nama || '', dibuat_oleh: me.username }, 'id');
   return out_({ ok: true, id: o.id });
 }
 function delImpl_(me, b) {
@@ -282,7 +282,7 @@ function bulk_(b) {
   (b.implementasi || []).forEach(function (x) {
     if (!x.kegiatan || !x.kerjasama_id || findRow_('Implementasi', 'id', x.id) > 0) return;
     saveRow_('Implementasi', { id: x.id, kerjasama_id: x.kerjasama_id, kegiatan: x.kegiatan,
-      tanggal: x.tanggal || '', lokasi: x.lokasi || '', hasil: x.hasil || '', realisasi: x.realisasi || '',
+      tanggal: x.tanggal || '', lokasi: x.lokasi || '', hasil: x.hasil || '', evaluasi: x.evaluasi || '', realisasi: x.realisasi || '',
       bukti_id: '', bukti_nama: '', dibuat_oleh: 'impor' }, 'id');
     n.implementasi++;
   });

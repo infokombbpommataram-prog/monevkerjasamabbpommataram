@@ -670,6 +670,8 @@ table.gov-table tbody tr:last-child td {
   padding: 5px 10px;
   font-size: 11.5px;
 }
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;border:1px solid var(--border-light);background:#fff;color:var(--ink-secondary);cursor:pointer;font-size:15px;margin:0 2px}
+.icon-btn:hover{background:#eef4f0;color:var(--ink-primary)}
 .btn-wa {
   background-color: #dcfce7;
   color: #15803d;
@@ -1142,8 +1144,9 @@ input[type="checkbox"] {
         <div class="toolbar">
           <div class="search-input-wrap">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="implSearch" placeholder="Cari kegiatan, lokasi, hasil..." oninput="renderImplTable()">
+            <input type="text" id="implSearch" placeholder="Cari kegiatan, hasil, evaluasi..." oninput="renderImplTable()">
           </div>
+          <select id="imFilterIns" style="max-width:240px"><option value="">Semua instansi</option></select>
         </div>
 
         <div class="table-wrapper" id="implTableBox">
@@ -1169,9 +1172,17 @@ input[type="checkbox"] {
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input type="text" id="insSearch" placeholder="Cari nama instansi, kategori..." oninput="renderInsTable()">
           </div>
+          <select id="insFilterJenis" onchange="renderInsTable()" style="max-width:220px">
+            <option value="">Semua kategori</option>
+            <option value="Pemda">Pemda</option>
+            <option value="Kampus">Kampus</option>
+            <option value="Profesi">Profesi</option>
+            <option value="Vertikal">Vertikal</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
         </div>
 
-        <div class="table-wrapper" id="insTableBox">
+        <div class="grid" id="insTableBox" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
           <!-- Rendered dynamically -->
         </div>
       </section>
@@ -1313,13 +1324,19 @@ input[type="checkbox"] {
             <input type="date" name="tgl_ttd">
           </div>
           <div>
-            <label class="field-label">Tanggal Mulai</label>
+            <label class="field-label">Mulai (yyyy/mm/dd)</label>
             <input type="date" name="tgl_mulai">
           </div>
           <div>
-            <label class="field-label">Tanggal Selesai</label>
+            <label class="field-label">Sampai (yyyy/mm/dd)</label>
             <input type="date" name="tgl_selesai" id="ksTglSelesai">
           </div>
+        </div>
+
+        <div>
+          <label class="field-label">Naskah MoU / PKS (.pdf, maks 10MB)</label>
+          <input type="file" id="ksFile" accept=".pdf">
+          <p class="mut" id="ksFileInfo"></p>
         </div>
 
         <div class="form-row-2" style="align-items:center;">
@@ -1359,13 +1376,17 @@ input[type="checkbox"] {
 
         <div class="form-row-2">
           <div>
+            <label class="field-label">Filter Instansi</label>
+            <select id="imFilterIns"></select>
+          </div>
+          <div>
             <label class="field-label">Terkait MoU / PKS *</label>
             <select name="kerjasama_id" id="imKs" required></select>
           </div>
-          <div>
-            <label class="field-label">Tanggal Kegiatan *</label>
-            <input type="date" name="tanggal" required>
-          </div>
+        </div>
+        <div>
+          <label class="field-label">Tanggal Kegiatan *</label>
+          <input type="date" name="tanggal" required>
         </div>
 
         <div>
@@ -1373,20 +1394,19 @@ input[type="checkbox"] {
           <input name="kegiatan" placeholder="cth: Kuliah Tamu Keamanan Pangan bagi Mahasiswa..." required>
         </div>
 
-        <div class="form-row-2">
-          <div>
-            <label class="field-label">Lokasi Kegiatan</label>
-            <input name="lokasi" placeholder="cth: Aula FKIP Unram, Mataram">
-          </div>
-          <div>
-            <label class="field-label">Nilai Realisasi / Output</label>
-            <input name="realisasi" placeholder="cth: 120 peserta / 100%">
-          </div>
+        <div>
+          <label class="field-label">Nilai Realisasi (isi manual)</label>
+          <input name="realisasi" placeholder="cth: 120 peserta / 100%">
         </div>
 
         <div>
-          <label class="field-label">Ringkasan Hasil / Catatan Pelaksanaan</label>
-          <textarea name="hasil" rows="3" placeholder="Hasil yang dicapai, tindak lanjut evaluasi..."></textarea>
+          <label class="field-label">Ringkasan Hasil</label>
+          <textarea name="hasil" rows="2" placeholder="Hasil yang dicapai..."></textarea>
+        </div>
+
+        <div>
+          <label class="field-label">Evaluasi / Tindak Lanjut</label>
+          <textarea name="evaluasi" rows="2" placeholder="Evaluasi dan tindak lanjut..."></textarea>
         </div>
 
         <div>
@@ -1871,21 +1891,26 @@ function load(view) {
   }
 
   if (view === 'impl') {
-    Promise.all([api('list_implementasi', {}), api('list_kerjasama')]).then(function (rs) {
+    Promise.all([api('list_implementasi', {}), api('list_kerjasama'), api('list_instansi')]).then(function (rs) {
       if (!rs[0].ok) { showToast(rs[0].error, 'error'); return; }
       S.impl = rs[0].data || [];
       if (rs[1].ok) {
         S.ks = rs[1].data || [];
         opt('imKs', S.ks, 'id', 'judul', '-- Pilih Kerja Sama --');
       }
+      if (rs[2].ok) {
+        S.ins = rs[2].data || [];
+        opt('imFilterIns', [{ id: '', nama: 'Semua instansi' }].concat(S.ins), 'id', 'nama');
+      }
       renderImplTable();
     });
   }
 
   if (view === 'ins') {
-    api('list_instansi').then(function (r) {
-      if (!r.ok) { showToast(r.error, 'error'); return; }
-      S.ins = r.data || [];
+    Promise.all([api('list_instansi'), api('list_kerjasama')]).then(function (rs) {
+      if (!rs[0].ok) { showToast(rs[0].error, 'error'); return; }
+      S.ins = rs[0].data || [];
+      S.ks = rs[1].ok ? (rs[1].data || []) : [];
       opt('uIns', S.ins, 'id', 'nama', '-- Khusus role User --');
       renderInsTable();
     });
@@ -1953,6 +1978,7 @@ function renderKsTable() {
     '<th>Instansi Mitra</th>' +
     '<th>Judul / Ruang Lingkup</th>' +
     '<th>Masa Berlaku</th>' +
+    '<th>Naskah</th>' +
     '<th>Status</th>' +
     '<th style="text-align:center;">Aksi</th>' +
   '</tr></thead><tbody>';
@@ -1960,16 +1986,23 @@ function renderKsTable() {
   filtered.forEach(function (k) {
     var statusClass = 'b-' + k.status;
     var statusLabel = (k.status || '').replace(/_/g, ' ');
-    var period = (k.tgl_mulai || '-') + ' s/d ' + (k.tgl_selesai || (k.tanpa_batas ? 'Tanpa Batas' : '-'));
+    var mulai = (k.tgl_mulai || '').replace(/-/g, '/');
+    var selesai = (k.tgl_selesai || '').replace(/-/g, '/');
+    var period = (mulai || '-') + ' s/d ' + (selesai || (k.tanpa_batas ? 'Tanpa Batas' : '-'));
+    var naskah = k.file_ttd_id
+      ? '<button class="icon-btn" title="Lihat naskah PDF" data-naskah="' + k.file_ttd_id + '">M</button>'
+      : '<span class="mut">-</span>';
 
     h += '<tr>' +
       '<td><span class="bold">' + esc(k.nomor) + '</span><br><span class="mut" style="font-weight:700;">' + esc(k.jenis) + '</span></td>' +
       '<td><span class="bold">' + esc(k.instansi_nama) + '</span></td>' +
       '<td style="max-width:340px;">' + esc(k.judul) + '<br><span class="mut">PIC: ' + esc(k.pic || '-') + '</span></td>' +
       '<td style="white-space:nowrap;">' + esc(period) + '</td>' +
+      '<td style="text-align:center;">' + naskah + '</td>' +
       '<td><span class="badge ' + statusClass + '"><span class="badge-dot"></span>' + esc(statusLabel) + '</span></td>' +
       '<td style="text-align:center; white-space:nowrap;">' +
         '<button class="btn sec sm" data-edit-ks="' + k.id + '">Ubah</button> ' +
+        '<button class="btn sec sm" data-del-ks="' + k.id + '">Hapus</button> ' +
         '<button class="btn sm btn-wa" data-wa-ks="' + esc(k.pic) + '" data-wa-judul="' + esc(k.judul) + '">WA PIC</button>' +
       '</td>' +
     '</tr>';
@@ -1983,6 +2016,21 @@ function renderKsTable() {
       var id = btn.getAttribute('data-edit-ks');
       var item = S.ks.filter(function (x) { return x.id === id; })[0];
       if (item) editKs(item);
+    };
+  });
+
+  box.querySelectorAll('[data-naskah]').forEach(function (btn) {
+    btn.onclick = function () {
+      dl(btn.getAttribute('data-naskah'));
+    };
+  });
+
+  box.querySelectorAll('[data-del-ks]').forEach(function (btn) {
+    btn.onclick = function () {
+      if (!confirm('Hapus MoU/PKS ini beserta ruang lingkupnya?')) return;
+      api('del_kerjasama', { id: btn.getAttribute('data-del-ks') }).then(function (r) {
+        if (!r.ok) showToast(r.error, 'error'); else { showToast('MoU/PKS dihapus.', 'info'); load('ks'); }
+      });
     };
   });
 
@@ -2004,9 +2052,14 @@ function renderKsTable() {
 
 function renderImplTable() {
   var q = (document.getElementById('implSearch').value || '').toLowerCase().trim();
+  var fi = document.getElementById('imFilterIns').value || '';
+  var ksOf = {};
+  S.ks.forEach(function (k) { ksOf[k.id] = k; });
   var filtered = S.impl.filter(function (x) {
+    var k = ksOf[x.kerjasama_id];
+    if (fi && (!k || k.instansi_id !== fi)) return false;
     if (!q) return true;
-    var haystack = [x.kegiatan, x.lokasi, x.hasil, x.tanggal, x.realisasi].join(' ').toLowerCase();
+    var haystack = [x.kegiatan, x.hasil, x.evaluasi, x.tanggal, x.realisasi, k ? k.judul : ''].join(' ').toLowerCase();
     return haystack.indexOf(q) !== -1;
   });
 
@@ -2019,24 +2072,36 @@ function renderImplTable() {
   var h = '<table class="gov-table"><thead><tr>' +
     '<th>Tanggal</th>' +
     '<th>Kegiatan</th>' +
-    '<th>Lokasi</th>' +
+    '<th>MoU/PKS</th>' +
     '<th>Realisasi</th>' +
     '<th>Hasil & Evaluasi</th>' +
     '<th style="text-align:center;">Bukti</th>' +
+    '<th style="text-align:center;">Aksi</th>' +
   '</tr></thead><tbody>';
 
+  var eye = '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>';
+  var pen = '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>';
+  var trash = '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>';
+
   filtered.forEach(function (x) {
-    var dlBtn = x.bukti_id 
-      ? '<button class="btn sec sm" data-dl="' + x.bukti_id + '">Unduh</button>'
-      : '<span class="mut">-</span>';
+    var k = ksOf[x.kerjasama_id];
+    var bukti = x.bukti_id
+      ? '<button class="icon-btn" title="Lihat bukti" data-dl="' + x.bukti_id + '">' + eye + '</button>'
+      : '<button class="icon-btn" title="Unggah bukti" data-up="' + x.id + '">+</button>';
+    var hasilEv = esc(x.hasil || '-');
+    if (x.evaluasi) hasilEv += '<br><span class="mut">Evaluasi: ' + esc(x.evaluasi) + '</span>';
 
     h += '<tr>' +
       '<td><span class="bold">' + esc(x.tanggal) + '</span></td>' +
       '<td><span class="bold">' + esc(x.kegiatan) + '</span></td>' +
-      '<td>' + esc(x.lokasi || '-') + '</td>' +
+      '<td>' + esc(k ? k.judul : '-') + '</td>' +
       '<td><span class="badge b-aktif">' + esc(x.realisasi || '-') + '</span></td>' +
-      '<td style="max-width:340px;">' + esc(x.hasil || '-') + '</td>' +
-      '<td style="text-align:center;">' + dlBtn + '</td>' +
+      '<td style="max-width:340px;">' + hasilEv + '</td>' +
+      '<td style="text-align:center;">' + bukti + '</td>' +
+      '<td style="text-align:center;white-space:nowrap;">' +
+        '<button class="icon-btn" title="Ubah" data-edit-impl="' + x.id + '">' + pen + '</button>' +
+        '<button class="icon-btn" title="Hapus" data-del-impl="' + x.id + '">' + trash + '</button>' +
+      '</td>' +
     '</tr>';
   });
 
@@ -2048,47 +2113,81 @@ function renderImplTable() {
       dl(btn.getAttribute('data-dl'));
     };
   });
+  box.querySelectorAll('[data-up]').forEach(function (btn) {
+    btn.onclick = function () {
+      var item = S.impl.filter(function (x) { return x.id === btn.getAttribute('data-up'); })[0];
+      if (item) editImpl(item, true);
+    };
+  });
+  box.querySelectorAll('[data-edit-impl]').forEach(function (btn) {
+    btn.onclick = function () {
+      var item = S.impl.filter(function (x) { return x.id === btn.getAttribute('data-edit-impl'); })[0];
+      if (item) editImpl(item, false);
+    };
+  });
+  box.querySelectorAll('[data-del-impl]').forEach(function (btn) {
+    btn.onclick = function () {
+      if (!confirm('Hapus catatan implementasi ini?')) return;
+      api('del_implementasi', { id: btn.getAttribute('data-del-impl') }).then(function (r) {
+        if (!r.ok) showToast(r.error, 'error'); else { showToast('Catatan dihapus.', 'info'); load('impl'); }
+      });
+    };
+  });
 }
 
 function renderInsTable() {
   var q = (document.getElementById('insSearch').value || '').toLowerCase().trim();
+  var fj = document.getElementById('insFilterJenis').value || '';
+  var box = document.getElementById('insTableBox');
+  var jmlKs = {}, levelKs = {};
+  S.ks.forEach(function (k) {
+    jmlKs[k.instansi_id] = (jmlKs[k.instansi_id] || 0) + 1;
+    if (k.jenis === 'MoU') levelKs[k.instansi_id] = 'MoU';
+    else if (!levelKs[k.instansi_id]) levelKs[k.instansi_id] = 'PKS';
+  });
   var filtered = S.ins.filter(function (x) {
+    if (fj && x.jenis !== fj) return false;
     if (!q) return true;
     var haystack = [x.nama, x.jenis, x.kontak].join(' ').toLowerCase();
     return haystack.indexOf(q) !== -1;
   });
 
-  var box = document.getElementById('insTableBox');
   if (!filtered.length) {
     box.innerHTML = '<div class="empty-state">Belum ada data instansi mitra terdaftar.</div>';
     return;
   }
 
-  var h = '<table class="gov-table"><thead><tr>' +
-    '<th>Nama Instansi Mitra</th>' +
-    '<th>Kategori</th>' +
-    '<th>Kontak / Narahubung</th>' +
-    '<th style="text-align:center;">Aksi</th>' +
-  '</tr></thead><tbody>';
-
+  var h = '';
   filtered.forEach(function (x) {
-    h += '<tr>' +
-      '<td><span class="bold">' + esc(x.nama) + '</span></td>' +
-      '<td><span class="badge b-tanpa_batas">' + esc(x.jenis) + '</span></td>' +
-      '<td>' + esc(x.kontak || '-') + '</td>' +
-      '<td style="text-align:center;">' +
+    var lvl = levelKs[x.id] || '-';
+    var badge = lvl === 'MoU' ? 'b-tanpa_batas' : 'b-aktif';
+    h += '<div class="card">' +
+      '<div class="mut">' + esc(x.jenis) + '</div>' +
+      '<div class="bold" style="font-size:15px;margin:4px 0;">' + esc(x.nama) + '</div>' +
+      '<div><span class="badge ' + badge + '">Level: ' + lvl + '</span> ' +
+      '<span class="mut">' + (jmlKs[x.id] || 0) + ' kerja sama</span></div>' +
+      '<div class="mut" style="margin:4px 0;">' + esc(x.kontak || '-') + '</div>' +
+      '<div style="display:flex;gap:6px;margin-top:6px;">' +
         '<button class="btn sec sm" data-edit-ins="' + x.id + '">Ubah</button>' +
-      '</td>' +
-    '</tr>';
+        '<button class="btn sec sm" data-del-ins="' + x.id + '">Hapus</button>' +
+      '</div>' +
+    '</div>';
   });
 
-  h += '</tbody></table>';
   box.innerHTML = h;
 
   box.querySelectorAll('[data-edit-ins]').forEach(function (btn) {
     btn.onclick = function () {
       var item = S.ins.filter(function (x) { return x.id === btn.getAttribute('data-edit-ins'); })[0];
       if (item) editIns(item);
+    };
+  });
+  box.querySelectorAll('[data-del-ins]').forEach(function (btn) {
+    btn.onclick = function () {
+      if (!confirm('Hapus instansi ini? Kerja sama terkait ikut tak tampil.')) return;
+      api('del_instansi', { id: btn.getAttribute('data-del-ins') }).then(function (r) {
+        if (!r.ok) showToast(r.error, 'error'); else { showToast('Instansi dihapus.', 'info'); load('ins'); }
+      });
     };
   });
 }
@@ -2192,6 +2291,7 @@ function editKs(k) {
   Object.keys(k).forEach(function (key) {
     if (f[key]) f[key].value = k[key];
   });
+  document.getElementById('ksFileInfo').textContent = k.file_ttd_nama ? 'Naskah tersimpan: ' + k.file_ttd_nama : 'Belum ada naskah PDF.';
   if (k.tanpa_batas) {
     f.tanpa_batas.checked = true;
     document.getElementById('ksTglSelesai').disabled = true;
@@ -2210,16 +2310,28 @@ document.getElementById('fKs').onsubmit = function (e) {
     o[k] = f[k] ? f[k].value : '';
   });
   o.tanpa_batas = f.tanpa_batas.checked;
-
-  api('save_kerjasama', { data: o }).then(function (r) {
-    if (!r.ok) {
-      showToast(r.error, 'error');
-    } else {
-      showToast('Data kerja sama berhasil disimpan.', 'info');
-      closeModal('mKsOverlay');
-      load('ks');
-    }
-  });
+  var fl = document.getElementById('ksFile').files[0];
+  var save = function () {
+    api('save_kerjasama', { data: o }).then(function (r) {
+      if (!r.ok) {
+        showToast(r.error, 'error');
+      } else {
+        showToast('Data kerja sama berhasil disimpan.', 'info');
+        closeModal('mKsOverlay');
+        load('ks');
+      }
+    });
+  };
+  if (!fl) return save();
+  if (!/\.pdf$/i.test(fl.name)) { showToast('Naskah MoU/PKS harus .pdf', 'error'); return; }
+  showToast('Mengunggah naskah PDF...', 'info');
+  file64(fl).then(function (b64) {
+    return api('upload', { nama: fl.name, mime: 'application/pdf', base64: b64 }).then(function (r) {
+      if (!r.ok) { showToast('Gagal unggah naskah: ' + r.error, 'error'); return; }
+      o.file_ttd_id = r.drive_id; o.file_ttd_nama = r.nama;
+      save();
+    });
+  }).catch(function (err) { showToast('Gagal membaca berkas: ' + err, 'error'); });
 };
 
 function openImplModal() {
@@ -2232,6 +2344,29 @@ function openImplModal() {
   openModal('mImplOverlay');
 }
 
+function editImpl(item, fokusBukti) {
+  var f = document.getElementById('fImpl');
+  f.reset();
+  f.id.value = item.id || '';
+  f.kerjasama_id.value = item.kerjasama_id || '';
+  f.tanggal.value = item.tanggal || '';
+  f.kegiatan.value = item.kegiatan || '';
+  f.realisasi.value = item.realisasi || '';
+  f.hasil.value = item.hasil || '';
+  f.evaluasi.value = item.evaluasi || '';
+  f.bukti_id.value = item.bukti_id || '';
+  f.bukti_nama.value = item.bukti_nama || '';
+  document.getElementById('mImplTitle').textContent = 'Ubah Implementasi: ' + (item.kegiatan || '').slice(0, 40);
+  openModal('mImplOverlay');
+  if (fokusBukti) setTimeout(function () { document.getElementById('bukti').focus(); }, 300);
+}
+
+document.getElementById('imFilterIns').onchange = function () {
+  var fi = this.value || '';
+  var list = fi ? S.ks.filter(function (k) { return k.instansi_id === fi; }) : S.ks;
+  opt('imKs', list, 'id', 'judul', '-- Pilih Kerja Sama --');
+  renderImplTable();
+};
 document.getElementById('fImpl').onsubmit = function (e) {
   e.preventDefault();
   var f = e.target;
@@ -2245,8 +2380,8 @@ document.getElementById('fImpl').onsubmit = function (e) {
       kerjasama_id: f.kerjasama_id.value,
       kegiatan: f.kegiatan.value,
       tanggal: f.tanggal.value,
-      lokasi: f.lokasi.value,
       hasil: f.hasil.value,
+      evaluasi: f.evaluasi.value,
       realisasi: f.realisasi.value,
       bukti_id: bid,
       bukti_nama: bnm
