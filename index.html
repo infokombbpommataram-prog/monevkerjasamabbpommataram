@@ -87,6 +87,12 @@ footer{padding:20px 16px;color:var(--mut);font-size:12px;text-align:center}
 <section id="v-users" class="hide"><h2>Pengguna</h2>
 <form class="box" id="fUser"><div class="row3"><label>Username<input name="username" required></label><label>Kata sandi baru<input name="password" placeholder="kosongkan bila tak ganti"></label><label>Role<select name="role"><option>admin</option><option>ketua</option><option>petugas</option><option>user</option></select></label></div><div class="row2"><label>Instansi (wajib utk role user)<select name="instansi_id" id="uIns"></select></label><label>Nama<input name="nama"></label></div><div><button class="btn pri">Simpan pengguna</button></div></form>
 <div id="userList"></div></section>
+<section id="v-imp" class="hide"><h2>Impor massal</h2>
+<div class="card"><p class="mut">Impor sekali dari hasil scan folder lama. Lewati baris yang ID-nya sudah ada, aman diulang.</p>
+<p class="mut" id="impInfo">Pilih 4 file CSV: instansi, kerjasama, ruanglingkup, implementasi.</p>
+<div class="row2"><label>instansi<input type="file" id="cIns" accept=".csv"></label><label>kerjasama<input type="file" id="cKs" accept=".csv"></label></div>
+<div class="row2"><label>ruanglingkup<input type="file" id="cRl" accept=".csv"></label><label>implementasi<input type="file" id="cIm" accept=".csv"></label></div>
+<div><button class="btn pri" id="bImp">Kirim impor</button> <span class="mut" id="impMsg"></span></div></div></section>
 </main>
 </div>
 <footer>draft tanpa arah desain, dial ENERGY 1 / RHYTHM 1 / MOTION 1. Data: Google Sheet + Drive via Apps Script.</footer>
@@ -120,13 +126,13 @@ function boot() {
   document.getElementById('login').classList.add('hide'); document.getElementById('app').classList.remove('hide');
   document.getElementById('who').textContent = S.me.nama + ' (' + S.me.role + ')';
   var items = [['dash', 'Dashboard'], ['ks', 'MoU/PKS'], ['impl', 'Implementasi'], ['ins', 'Instansi'], ['dok', 'Dokumen']];
-  if (S.me.role === 'admin') items.push(['users', 'Pengguna']);
+  if (S.me.role === 'admin') items.push(['users', 'Pengguna'], ['imp', 'Impor']);
   var nav = document.getElementById('nav'); nav.innerHTML = '';
   items.forEach(function (it, i) {
     var b = document.createElement('button'); b.textContent = it[1]; if (i === 0) b.classList.add('on');
     b.onclick = function () {
       nav.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); }); b.classList.add('on');
-      ['dash', 'ks', 'impl', 'ins', 'dok', 'users'].forEach(function (v) { document.getElementById('v-' + v).classList.add('hide'); });
+      ['dash', 'ks', 'impl', 'ins', 'dok', 'users', 'imp'].forEach(function (v) { document.getElementById('v-' + v).classList.add('hide'); });
       document.getElementById('v-' + it[0]).classList.remove('hide');
       load(it[0]);
     };
@@ -219,6 +225,30 @@ function dl(drive_id) {
     a.href = 'data:' + r.mime + ';base64,' + r.base64; a.download = r.nama; a.click();
   });
 }
+function csv(f) {
+  return new Promise(function (res) {
+    if (!f) return res([]);
+    var r = new FileReader();
+    r.onload = function () {
+      var lines = String(r.result).replace(/^\uFEFF/, '').split(/\r?\n/).filter(function (x) { return x.trim(); });
+      var h = lines.shift().split(',');
+      res(lines.map(function (ln) {
+        var o = {}, cells = ln.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+        h.forEach(function (k, i) { o[k.trim()] = (cells[i] || '').replace(/^"|"$/g, '').trim(); });
+        return o;
+      }));
+    };
+    r.readAsText(f);
+  });
+}
+document.getElementById('bImp').onclick = function () {
+  document.getElementById('impMsg').textContent = 'Mengirim...';
+  Promise.all([csv(document.getElementById('cIns').files[0]), csv(document.getElementById('cKs').files[0]), csv(document.getElementById('cRl').files[0]), csv(document.getElementById('cIm').files[0])]).then(function (a) {
+    api('bulk_import', { instansi: a[0], kerjasama: a[1], ruanglingkup: a[2], implementasi: a[3] }).then(function (r) {
+      document.getElementById('impMsg').textContent = r.ok ? 'Impor masuk: ' + JSON.stringify(r.imported) : r.error;
+    }).catch(function (e) { document.getElementById('impMsg').textContent = 'Gagal: ' + e; });
+  });
+};
 document.getElementById('fKs').onsubmit = function (e) {
   e.preventDefault(); var f = e.target, o = {};
   ['id', 'nomor', 'jenis', 'instansi_id', 'judul', 'tgl_ttd', 'tgl_mulai', 'tgl_selesai', 'pic', 'file_ttd_id', 'file_ttd_nama'].forEach(function (k) { o[k] = f[k] ? f[k].value : ''; });

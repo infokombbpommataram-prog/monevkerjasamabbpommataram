@@ -115,6 +115,7 @@ function doPost(e) {
       case 'del_implementasi': return delImpl_(me, b);
       case 'save_user': need_(me, ['admin']); return saveUser_(b);
       case 'del_user': need_(me, ['admin']); return out_({ ok: delRow_('Users','username', b.username) });
+      case 'bulk_import': need_(me, ['admin']); return bulk_(b);
       case 'upload': return upload_(me, b);
       case 'download': return download_(me, b);
     }
@@ -257,6 +258,36 @@ function saveUser_(b) {
   return out_({ ok: true });
 }
 
+function bulk_(b) {
+  var n = { instansi: 0, kerjasama: 0, ruanglingkup: 0, implementasi: 0 };
+  (b.instansi || []).forEach(function (x) {
+    if (!x.nama || findRow_('Instansi', 'id', x.id) > 0) return;
+    saveRow_('Instansi', { id: x.id, nama: x.nama, jenis: x.jenis || '', kontak: '' }, 'id');
+    n.instansi++;
+  });
+  (b.kerjasama || []).forEach(function (x) {
+    if (!x.judul || !x.instansi_id || findRow_('Kerjasama', 'id', x.id) > 0) return;
+    saveRow_('Kerjasama', { id: x.id, nomor: x.nomor || x.id, judul: x.judul, jenis: x.jenis || 'MoU',
+      instansi_id: x.instansi_id, tgl_ttd: x.tgl_ttd || '', tgl_mulai: x.tgl_mulai || '',
+      tgl_selesai: x.tgl_selesai || '', tanpa_batas: x.tanpa_batas || '', pic: x.pic || '',
+      file_ttd_id: '', file_ttd_nama: '' }, 'id');
+    n.kerjasama++;
+  });
+  (b.ruanglingkup || []).forEach(function (x) {
+    if (!x.ruang_lingkup || !x.kerjasama_id || findRow_('RuangLingkup', 'id', x.id) > 0) return;
+    saveRow_('RuangLingkup', { id: x.id, kerjasama_id: x.kerjasama_id, ruang_lingkup: x.ruang_lingkup,
+      rencana_kegiatan: x.rencana_kegiatan || '', indikator: x.indikator || '', target_outcome: x.target_outcome || '' }, 'id');
+    n.ruanglingkup++;
+  });
+  (b.implementasi || []).forEach(function (x) {
+    if (!x.kegiatan || !x.kerjasama_id || findRow_('Implementasi', 'id', x.id) > 0) return;
+    saveRow_('Implementasi', { id: x.id, kerjasama_id: x.kerjasama_id, kegiatan: x.kegiatan,
+      tanggal: x.tanggal || '', lokasi: x.lokasi || '', hasil: x.hasil || '', realisasi: x.realisasi || '',
+      bukti_id: '', bukti_nama: '', dibuat_oleh: 'impor' }, 'id');
+    n.implementasi++;
+  });
+  return out_({ ok: true, imported: n });
+}
 function rootFolder_() {
   var p = PropertiesService.getScriptProperties().getProperty('DRIVE_FOLDER_ID');
   if (!p) throw new Error('Set DRIVE_FOLDER_ID di Project Settings > Script Properties.');
