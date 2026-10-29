@@ -102,18 +102,17 @@ aside.sidebar {
   gap: 12px;
 }
 .sidebar-logo {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--brand-emerald), #10b981);
-  color: #fff;
+  width: 38px;
+  height: 38px;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 13px;
-  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
+  background: rgba(255,255,255,.08);
+  overflow: hidden;
 }
+.sidebar-logo img{width:32px;height:32px;object-fit:contain}
+.login-logo img{width:44px;height:44px;object-fit:contain}
 .sidebar-title {
   font-size: 14px;
   font-weight: 700;
@@ -944,7 +943,7 @@ input[type="checkbox"] {
 <div id="login">
   <div class="login-card">
     <div class="login-header">
-      <div class="login-logo">POM</div>
+      <div class="login-logo"><img src="bpom_logo.png" alt="Logo BPOM"></div>
       <h1 class="login-title">Monev Kerja Sama</h1>
       <p class="login-subtitle">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
     </div>
@@ -981,9 +980,9 @@ input[type="checkbox"] {
   <!-- Left Sidebar -->
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-logo">POM</div>
+      <div class="sidebar-logo"><img src="bpom_logo.png" alt="Logo BPOM"></div>
       <div>
-        <div class="sidebar-title">Monev BBPOM</div>
+        <div class="sidebar-title">Monev Kerja Sama</div>
         <div class="sidebar-subtitle">BBPOM di Mataram</div>
       </div>
     </div>
@@ -1081,18 +1080,8 @@ input[type="checkbox"] {
         <div class="charts-grid">
           <div class="card">
             <div class="card-header">
-              <span class="card-title">Distribusi Kerja Sama per Instansi</span>
-              <span class="mut">MoU / PKS</span>
-            </div>
-            <div class="card-body">
-              <canvas id="c1" width="500" height="240" style="width:100%; display:block;"></canvas>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-header">
               <span class="card-title">Tren Implementasi Kegiatan per Bulan</span>
-              <span class="mut">Capaian Realisasi</span>
+              <select id="trenTahun" onchange="renderTren()" style="max-width:120px"><option value="">Semua</option></select>
             </div>
             <div class="card-body">
               <canvas id="c2" width="500" height="240" style="width:100%; display:block;"></canvas>
@@ -1907,8 +1896,11 @@ function load(view) {
         alertBox.classList.add('hide');
       }
 
-      chartArea('c1', d.per_instansi, '#0284c7');
-      chartArea('c2', d.per_bulan, '#059669');
+      S.tren = d.per_bulan || {};
+      var th = Object.keys(S.tren).map(function (k) { return k.slice(0, 4); }).filter(function (v, i, a) { return v && a.indexOf(v) === i; }).sort();
+      var sel = document.getElementById('trenTahun');
+      sel.innerHTML = '<option value="">Semua</option>' + th.map(function (t) { return '<option>' + t + '</option>'; }).join('');
+      renderTren();
     });
   }
 
@@ -2025,21 +2017,21 @@ function renderKsTable() {
     var mulai = (k.tgl_mulai || '').replace(/-/g, '/');
     var selesai = (k.tgl_selesai || '').replace(/-/g, '/');
     var period = (mulai || '-') + ' s/d ' + (selesai || (k.tanpa_batas ? 'Tanpa Batas' : '-'));
-    var naskah = k.file_ttd_id
-      ? '<button class="icon-btn" title="Lihat naskah PDF" data-naskah="' + k.file_ttd_id + '">M</button>'
-      : '<span class="mut">-</span>';
 
     h += '<tr>' +
       '<td><span class="bold">' + esc(k.nomor) + '</span><br><span class="mut" style="font-weight:700;">' + esc(k.jenis) + '</span></td>' +
       '<td><span class="bold">' + esc(k.instansi_nama) + '</span></td>' +
       '<td style="max-width:340px;">' + esc(k.judul) + '<br><span class="mut">PIC: ' + esc(k.pic || '-') + '</span></td>' +
       '<td style="white-space:nowrap;">' + esc(period) + '</td>' +
-      '<td style="text-align:center;">' + naskah + '</td>' +
+      '<td style="text-align:center;">' + (k.file_ttd_id
+        ? '<button class="icon-btn" title="Lihat naskah PDF" data-naskah="' + k.file_ttd_id + '">' + IC.doc + '</button>'
+        : '<span class="mut">-</span>') + '</td>' +
+      '</td>' +
       '<td><span class="badge ' + statusClass + '"><span class="badge-dot"></span>' + esc(statusLabel) + '</span></td>' +
       '<td style="text-align:center; white-space:nowrap;">' +
-        '<button class="btn sec sm" data-edit-ks="' + k.id + '">Ubah</button> ' +
-        '<button class="btn sec sm" data-del-ks="' + k.id + '">Hapus</button> ' +
-        '<button class="btn sm btn-wa" data-wa-ks="' + esc(k.pic) + '" data-wa-judul="' + esc(k.judul) + '">WA PIC</button>' +
+        (S.me.role === 'admin' ? '<button class="icon-btn" title="Ubah" data-edit-ks="' + k.id + '">' + IC.pen + '</button>' : '') +
+        (S.me.role === 'admin' ? '<button class="icon-btn" title="Hapus" data-del-ks="' + k.id + '">' + IC.trash + '</button>' : '') +
+        '<button class="icon-btn" title="WA PIC" data-wa-ks="' + esc(k.pic) + '" data-wa-judul="' + esc(k.judul) + '">' + IC.wa + '</button>' +
       '</td>' +
     '</tr>';
   });
@@ -2115,15 +2107,25 @@ function renderImplTable() {
     '<th style="text-align:center;">Aksi</th>' +
   '</tr></thead><tbody>';
 
-  var eye = '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>';
-  var pen = '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>';
-  var trash = '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>';
+function icons() {
+  var p = function (d) { return '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="' + d + '"/></svg>'; };
+  return {
+    eye: '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>',
+    up: '<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>',
+    pen: p('M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'),
+    trash: p('M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'),
+    dl: p('M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4'),
+    doc: p('M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'),
+    wa: p('M8 12h8m-8 4h8m-8-8h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z')
+  };
+}
+var IC = icons();
 
   filtered.forEach(function (x) {
     var k = ksOf[x.kerjasama_id];
     var bukti = x.bukti_id
-      ? '<button class="icon-btn" title="Lihat bukti" data-dl="' + x.bukti_id + '">' + eye + '</button>'
-      : '<button class="icon-btn" title="Unggah bukti" data-up="' + x.id + '">+</button>';
+      ? '<button class="icon-btn" title="Lihat bukti" data-dl="' + x.bukti_id + '">' + IC.eye + '</button>'
+      : '<button class="icon-btn" title="Unggah bukti" data-up="' + x.id + '">' + IC.up + '</button>';
     var hasilEv = esc(x.hasil || '-');
     if (x.evaluasi) hasilEv += '<br><span class="mut">Evaluasi: ' + esc(x.evaluasi) + '</span>';
 
@@ -2135,8 +2137,8 @@ function renderImplTable() {
       '<td style="max-width:340px;">' + hasilEv + '</td>' +
       '<td style="text-align:center;">' + bukti + '</td>' +
       '<td style="text-align:center;white-space:nowrap;">' +
-        '<button class="icon-btn" title="Ubah" data-edit-impl="' + x.id + '">' + pen + '</button>' +
-        '<button class="icon-btn" title="Hapus" data-del-impl="' + x.id + '">' + trash + '</button>' +
+        '<button class="icon-btn" title="Ubah" data-edit-impl="' + x.id + '">' + IC.pen + '</button>' +
+        '<button class="icon-btn" title="Hapus" data-del-impl="' + x.id + '">' + IC.trash + '</button>' +
       '</td>' +
     '</tr>';
   });
@@ -2204,8 +2206,8 @@ function renderInsTable() {
       '<span class="mut">' + (jmlKs[x.id] || 0) + ' kerja sama</span></div>' +
       '<div class="mut" style="margin:4px 0;">' + esc(x.kontak || '-') + '</div>' +
       '<div style="display:flex;gap:6px;margin-top:6px;">' +
-        '<button class="btn sec sm" data-edit-ins="' + x.id + '">Ubah</button>' +
-        '<button class="btn sec sm" data-del-ins="' + x.id + '">Hapus</button>' +
+        (S.me.role === 'admin' ? '<button class="icon-btn" title="Ubah" data-edit-ins="' + x.id + '">' + IC.pen + '</button>' : '') +
+        (S.me.role === 'admin' ? '<button class="icon-btn" title="Hapus" data-del-ins="' + x.id + '">' + IC.trash + '</button>' : '') +
       '</div>' +
     '</div>';
   });
@@ -2255,7 +2257,7 @@ function renderDokTable() {
       '<td><span class="badge b-tanpa_batas">' + esc(x.kategori) + '</span></td>' +
       '<td><span class="bold">' + esc(x.nama_file) + '</span></td>' +
       '<td style="text-align:center;">' +
-        '<button class="btn sec sm" data-dl="' + x.drive_id + '">Unduh</button>' +
+        '<button class="icon-btn" title="Unduh" data-dl="' + x.drive_id + '">' + IC.dl + '</button>' +
       '</td>' +
     '</tr>';
   });
@@ -2292,7 +2294,7 @@ function renderUserTable() {
       '<td><span class="badge b-aktif">' + esc(x.role) + '</span></td>' +
       '<td>' + esc(x.instansi_id || '-') + '</td>' +
       '<td style="text-align:center;">' +
-        '<button class="btn sec sm" data-edit-usr="' + esc(x.username) + '">Ubah</button>' +
+        '<button class="icon-btn" title="Ubah" data-edit-usr="' + esc(x.username) + '">' + IC.pen + '</button>' +
       '</td>' +
     '</tr>';
   });
@@ -2595,6 +2597,12 @@ document.getElementById('fUser').onsubmit = function (e) {
 // RETINA CANVAS CHARTS
 // ---------------------------------------------------------------------------
 
+function renderTren() {
+  var y = (document.getElementById('trenTahun') || {}).value || '';
+  var src = S.tren || {}, out = {};
+  Object.keys(src).forEach(function (k) { if (!y || k.indexOf(y) === 0) out[k] = src[k]; });
+  chartArea('c2', out, '#059669');
+}
 function chartArea(id, obj, color) {
   var c = document.getElementById(id);
   if (!c) return;
